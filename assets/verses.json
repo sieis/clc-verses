@@ -1,18 +1,218 @@
 [
     {
-        "reference": "2 Chronicles 16:9a",
-        "verse": "For the eyes of the Lord range throughout the earth to strengthen those whose hearts are fully committed to him."
+      "reference": "2 Chronicles 16:9",
+      "esv": "For the eyes of the Lord run to and fro throughout the whole earth, to give strong support to those whose heart is blameless toward him.",
+      "niv": "For the eyes of the Lord range throughout the earth to strengthen those whose hearts are fully committed to him.",
+      "nasb95": "For the eyes of the Lord move to and fro throughout the earth that He may strongly support those whose heart is completely His."
     },
     {
-        "reference":"Deuteronomy 4:29",
-        "verse":"But if from there you seek the Lord your God you will find him if you seek him with all your heart and with all your soul."
+      "reference": "Deuteronomy 4:29",
+      "esv": "But from there you will seek the Lord your God and you will find him",
+      "niv": "if you search after him with all your heart and with all your soul.",
+      "nasb95": "But if from there you seek the Lord your God"
     },
     {
-        "reference": "Psalm 27:4",
-        "verse": "One thing I ask, this only do I seek, that I may dwell in the house of the Lord all the days of my life, to gaze upon the beauty of the Lord and to seek him in his temple."
+      "reference": "Psalm 27:4",
+      "esv": "One thing have I asked of the Lord",
+      "niv": "that will I seek after: that I may dwell in the house of the Lord all the days of my life",
+      "nasb95": "to gaze upon the beauty of the Lord and to inquire in his temple."
     },
     {
-        "reference": "2 Corinthians 5:21",
-        "verse": "God made him who knew no sin to be sin for us so that in him we might become the righteousness of God."
+      "reference": "2 Corinthians 5:21",
+      "esv": "For our sake he made him to be sin who knew no sin",
+      "niv": "so that in him we might become the righteousness of God.",
+      "nasb95": "God made him who had no sin to be sin for us"
+    },
+    {
+      "reference": "Galatians 2:20",
+      "esv": "I have been crucified with Christ. It is no longer I who live",
+      "niv": "but Christ who lives in me. And the life I now live in the flesh I live by faith in the Son of God",
+      "nasb95": "who loved me and gave himself for me."
+    },
+    {
+      "reference": "2 Corinthians 2:14",
+      "esv": "But thanks be to God",
+      "niv": "who in Christ always leads us in triumphal procession",
+      "nasb95": "and through us spreads the fragrance of the knowledge of him everywhere."
+    },
+    {
+      "reference": "Romans 8:28",
+      "esv": "And we know that for those who love God all things work together for good",
+      "niv": "for those who are called according to his purpose.",
+      "nasb95": "And we know that in all things God works for the good of those who love him"
+    },
+    {
+      "reference": "2 Corinthians 4:7",
+      "esv": "But we have this treasure in jars of clay",
+      "niv": "to show that the surpassing power belongs to God and not to us.",
+      "nasb95": "But we have this treasure in jars of clay to show that this all-surpassing power is from God and not from us."
+    },
+    {
+      "reference": "2 Corinthians 4:17–18",
+      "esv": "For this light momentary affliction is preparing for us an eternal weight of glory beyond all comparison",
+      "niv": "as we look not to the things that are seen but to the things that are unseen. For the things that are seen are transient",
+      "nasb95": "but the things that are unseen are eternal."
+    },
+    {
+      "reference": "Psalm 119:18",
+      "esv": "Open my eyes",
+      "niv": "that I may behold wondrous things out of your law.",
+      "nasb95": "Open my eyes that I may see wonderful things in your law."
+    },
+    {
+      "reference": "Psalm 119:27",
+      "esv": "Make me understand the way of your precepts",
+      "niv": "and I will meditate on your wondrous works.",
+      "nasb95": "Cause me to understand the way of your precepts"
+    },
+    {
+      "reference": "Psalm 119:105",
+      "esv": "Your word is a lamp to my feet and a light to my path.",
+      "niv": "Your word is a lamp for my feet",
+      "nasb95": "a light on my path."
+    },
+    {
+      "reference": "1 Samuel 12:23",
+      "esv": "Moreover",
+      "niv": "as for me",
+      "nasb95": "far be it from me that I should sin against the Lord by ceasing to pray for you"
+    },
+    {
+      "reference": "2 Timothy 2:2",
+      "esv": "and what you have heard from me in the presence of many witnesses entrust to faithful men",
+      "niv": "who will be able to teach others also.",
+      "nasb95": "And the things you have heard me say in the presence of many witnesses entrust to reliable people who will also be qualified to teach others."
+    },
+    {
+      "reference": "Matthew 28:18–20",
+      "esv": "And Jesus came and said to them",
+      "niv": "“All authority in heaven and on earth has been given to me. Go therefore and make disciples of all nations",
+      "nasb95": "baptizing them in the name of the Father and of the Son and of the Holy Spirit"
+    },
+    {
+      "reference": "Hebrews 10:24–25",
+      "esv": "And let us consider how to stir up one another to love and good works",
+      "niv": "not neglecting to meet together",
+      "nasb95": "as is the habit of some"
+    },
+    {
+      "reference": "2 Corinthians 1:4",
+      "esv": "who comforts us in all our affliction",
+      "niv": "so that we may be able to comfort those who are in any affliction",
+      "nasb95": "with the comfort with which we ourselves are comforted by God."
+    },
+    {
+      "reference": "Proverbs 18:21",
+      "esv": "Death and life are in the power of the tongue",
+      "niv": "and those who love it will eat its fruits.",
+      "nasb95": "The tongue has the power of life and death"
+    },
+    {
+      "reference": "Ephesians 5:21",
+      "esv": "submitting to one another out of reverence for Christ.",
+      "niv": "Submit to one another out of reverence for Christ.",
+      "nasb95": "and be subject to one another in the fear of Christ."
+    },
+    {
+      "reference": "Ephesians 5:23",
+      "esv": "For the husband is the head of the wife even as Christ is the head of the church",
+      "niv": "his body",
+      "nasb95": "and is himself its Savior."
+    },
+    {
+      "reference": "Ephesians 5:25",
+      "esv": "Husbands",
+      "niv": "love your wives",
+      "nasb95": "as Christ loved the church and gave himself up for her."
+    },
+    {
+      "reference": "1 Peter 3:7",
+      "esv": "Likewise",
+      "niv": "husbands",
+      "nasb95": "live with your wives in an understanding way"
+    },
+    {
+      "reference": "Malachi 2:16",
+      "esv": "“For the man who does not love his wife but divorces her",
+      "niv": "says the Lord",
+      "nasb95": "the God of Israel"
+    },
+    {
+      "reference": "Deuteronomy 6:6–7",
+      "esv": "And these words that I command you today shall be on your heart. You shall teach them diligently to your children",
+      "niv": "and shall talk of them when you sit in your house",
+      "nasb95": "and when you walk by the way"
+    },
+    {
+      "reference": "Proverbs 3:5–6",
+      "esv": "Trust in the Lord with all your heart",
+      "niv": "and do not lean on your own understanding. In all your ways acknowledge him",
+      "nasb95": "and he will make straight your paths."
+    },
+    {
+      "reference": "Colossians 3:23",
+      "esv": "Whatever you do",
+      "niv": "work heartily",
+      "nasb95": "as for the Lord and not for men"
+    },
+    {
+      "reference": "Micah 6:8",
+      "esv": "He has told you",
+      "niv": "O man",
+      "nasb95": "what is good; and what does the Lord require of you but to do justice"
+    },
+    {
+      "reference": "Romans 1:16",
+      "esv": "For I am not ashamed of the gospel",
+      "niv": "for it is the power of God for salvation to everyone who believes",
+      "nasb95": "to the Jew first and also to the Greek."
+    },
+    {
+      "reference": "John 10:10",
+      "esv": "The thief comes only to steal and kill and destroy. I came that they may have life and have it abundantly.",
+      "niv": "The thief comes only to steal and kill and destroy; I have come that they may have life",
+      "nasb95": "and have it to the full."
+    },
+    {
+      "reference": "Romans 3:23",
+      "esv": "for all have sinned and fall short of the glory of God",
+      "niv": "",
+      "nasb95": "for all have sinned and fall short of the glory of God"
+    },
+    {
+      "reference": "Deuteronomy 8:17-18a",
+      "esv": "Beware lest you say in your heart",
+      "niv": "my power and the might of my hand have gotten me this wealth.\" You shall remember the Lord your God",
+      "nasb95": "for it is he who gives you power to get wealth."
+    },
+    {
+      "reference": "Romans 5:8",
+      "esv": "But God shows his own love for us in that while we were still sinners Christ died for us.",
+      "niv": "But God demonstrates his own love for us in this: While we were still sinners",
+      "nasb95": "Christ died for us."
+    },
+    {
+      "reference": "Romans 10:9",
+      "esv": "But if you confess with your mouth that Jesus is Lord and believe in your heart that God raised him from the dead",
+      "niv": "you will be saved.",
+      "nasb95": "If you declare with your mouth"
+    },
+    {
+      "reference": "1 John 5:11-13",
+      "esv": "And this is the testimony",
+      "niv": "that God gave us eternal life and this life is in his Son. Whoever has the Son has life; whoever does not have the Son of God does not have life. I write these things to you who believe in the name of the Son of God",
+      "nasb95": "that you may know that you have eternal life."
+    },
+    {
+      "reference": "1 Timothy 3:16-17",
+      "esv": "All scripture is breathed out by God and profitable for teaching",
+      "niv": "for reproof",
+      "nasb95": "for correction and for training in righteousness that the man of God may be complete"
+    },
+    {
+      "reference": "Ephesians 4:11-13",
+      "esv": "And he gave the apostles",
+      "niv": "the prophets",
+      "nasb95": "the evangelists"
     }
-]
+  ]
