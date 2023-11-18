@@ -4,13 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Vina+Sans&display=swap" rel="stylesheet">
     <title>CLC Verses</title>
 </head>
 <body>
-    <h1>CLC Verses</h1>
+    <section class="hero">
+        <div class="heroflex">
+            <h1>CLC Verses</h1>
+            <p>A scripture memory tool for CLC's 2 Year Program.</p>
+            <p>Select the version from the buttons below, and click each reference to view the verse.</p>
+        </div>
+    </section>
     <main>
         <div class="btns">
-            <button class="btn" id="esv">ESV</button>
+            <button class="btn btn-focus" id="esv">ESV</button>
             <button class="btn" id="niv">NIV</button>
             <button class="btn" id="nasb">NASB</button>
         </div>
@@ -18,6 +27,10 @@
 
         </div>
     </main>
+    <footer>
+        a project by <a href="https://eamonncottrell.com">Eamonn</a>
+        <p>say hey on <a href="https://www.linkedin.com/in/eamonncottrell/">LinkedIn</a> or <a href="https://www.youtube.com/@eamonncottrell">YouTube</a></p>
+    </footer>
 </body>
 <script src="scripts/main.js" type="module"></script>
 </html>
