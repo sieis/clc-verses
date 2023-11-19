@@ -53,6 +53,8 @@
     My styles
    */
 
+
+
   body{
     background-color: #fafafa;
     font-family: 'Open Sans', sans-serif;
@@ -62,17 +64,35 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
     text-align: center;
-    padding: 20px 0;
+    padding: 70px;
     width: 1200px;
     max-width: 90%;
+    gap: 80px;
+    background-color: #ff6d4d;
+    border-radius: 1.2rem
+  }
+
+  @media only screen and (max-width: 600px) {
+    .hero{
+      gap: 30px;
+    }
+  }
+  .hero-text{
+    /* padding-right: 200px; */
+  }
+  .hero-img img{
+    /* width: 300px; */
   }
 
   h1{
-    font-size: 2.5rem;
+    font-size: 4.5rem;
     padding: 20px 0;
+  }
+  p{
+    font-size: 1.2rem;
   }
 
   #verses{
@@ -97,7 +117,7 @@
   
   .btn{
     background-color: #ff6d4d;
-    color: white;
+    color: #fafafa;
     font-weight: bold;
     font-size: 1.2rem;
     border: none;
@@ -120,6 +140,7 @@
     font-size: 1.8rem;
     font-weight: bold;
     cursor: pointer;
+    padding: 1rem;
   }
   
   details{
@@ -128,8 +149,8 @@
     font-size: 1.2rem;
     padding: 5px 20px;
     margin: 3px 0;
-    border: solid rgb(35, 35, 35) 2px;
-    border-radius: 3px;
+    border: solid rgb(35, 35, 35) .5px;
+    border-radius: 1.2rem;
   }
   details[open]{
     padding-bottom: 1rem;
