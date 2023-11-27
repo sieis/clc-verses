@@ -117,20 +117,43 @@
   }
   
   .btn{
-    background-color: #ff6d4d;
-    color: #fafafa;
-    font-weight: bold;
+    background: #ff6d4d;
+    box-shadow: 2px 2px #fff, 7px 7px #151515;
+    color: #fff;
+    border: solid 2px #151515;
+    border-radius: 25px;
     font-size: 1.2rem;
-    border: none;
-    border-radius: 100px;
     width: 150px;
     padding: 10px;
-    max-width: 20%;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    transition: 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
     cursor: pointer;
+    overflow: hidden;
+    transition-delay: 0s !important;
+  }
+
+  .btn:hover::before {
+    width: 100%;
+    left: 0;
+    right: unset;
+  }
+
+  .btn::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    width: 0%;
+    height: 100%;
+    background: #d12600;
+    z-index: -1;
+    transition: 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
   }
   
   .btn:hover{
-    background-color: #d12600;
+    box-shadow: 0 0 #fff, 0 0 #151515;
   }
 
   .btn-focus{
