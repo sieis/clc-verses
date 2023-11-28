@@ -9,4 +9,11 @@ Memory Verses for CLC All-In Groups
 
 If you'd like to contribute, please check out current [issues](https://github.com/sieis/clc-verses/issues) and/or submit a new one. Also, please let me know so I can assign to you.
 
+Pull requests are the best way to propose your changes to the codebase. Here's the best, simplest way to make pull requests:
+
+1. Fork the repo and create your branch from main.
+1. Make your changes locally
+1. Push changes to your forked repo
+1. Issue that pull request!
+
 This is a beginner-friendly project. It is bare-bones by design. I'm a regular dude learning as I go just like you. 😄
