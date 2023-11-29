@@ -62,7 +62,7 @@
 
   body{
     background-color: #fafafa;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Rubik', sans-serif;
   }
   .hero{
     margin: auto;
@@ -119,10 +119,11 @@
   .btn{
     background: #ff6d4d;
     box-shadow: 2px 2px #fff, 7px 7px #151515;
-    color: #fff;
+    color: #000;
     border: solid 2px #151515;
     border-radius: 25px;
     font-size: 1.2rem;
+    font-weight: 700;
     width: 150px;
     padding: 10px;
     align-items: center;
@@ -158,6 +159,7 @@
 
   .btn-focus{
     background-color: #d12600;
+    color: #fff;
   }
   
   summary{
@@ -185,7 +187,6 @@
   @media only screen and (max-width: 600px) {
     .btn{
       font-size: .8rem;
-      font-weight: 100;
       border: none;
       border-radius: 20px;
     }
