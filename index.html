@@ -48,26 +48,33 @@
 <body>
     <section class="hero">
         <div class="hero-text">
-            <h1>CLC Verses</h1>
+            <div class="titles">
+                <h1>CLC Verses</h1>
+                <h2 id="desktop" hidden>A scripture memory tool for CLC's 2 Year Program.</h2>
+            </div>
             <div class="hero-img">
                 <img src="./assets/open-book.png" alt="">
             </div>
-            <p>A scripture memory tool for CLC's 2 Year Program. Select the version from the buttons below, and click each reference to view the verse.</p>
+            <h2 id="mobile">A scripture memory tool for CLC's 2 Year Program.</h2>
         </div>
     </section>
     <main>
-        <div class="btns">
-            <button class="btn btn-focus" id="esv">ESV</button>
-            <button class="btn" id="niv">NIV</button>
-            <button class="btn" id="nasb">NASB</button>
+        <div class="sticky">
+            <div class="btns">
+                <button class="btn btn-focus" id="esv">ESV</button>
+                <button class="btn" id="niv">NIV</button>
+                <button class="btn" id="nasb">NASB</button>
+            </div>
+            <p class="text">Click the version above and the reference below.</p>
         </div>
         <div id="verses">
             
         </div>
     </main>
     <footer>
-        a project by <a href="https://eamonncottrell.com">Eamonn</a>
+        <p>a project by <a href="https://eamonncottrell.com">Eamonn</a></p>
         <p>say hey on <a href="https://www.linkedin.com/in/eamonncottrell/">LinkedIn</a> or <a href="https://www.youtube.com/@eamonncottrell">YouTube</a></p>
+        <p>open sourced on <a href="https://github.com/sieis/clc-verses">GitHub</a></p>
     </footer>
 </body>
 <script src="scripts/main.js" type="module"></script>
