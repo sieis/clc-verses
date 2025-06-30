@@ -10,7 +10,7 @@ Memory Verses for CLC All-In Groups
 
 ## Description
 
-This project is a simple web application designed to help users memorize Bible verses. It's specifically tailored for the Christian Life Community (CLC) 2-Year All-In Curriculum. The application displays memory verses from the curriculum, allowing users to select different Bible versions (ESV, NIV, and NASB) to aid in their memorization.
+This project is a simple web application designed to help users memorize Bible verses. It's specifically tailored for the [Christ Led Communities'](https://www.clchq.org/) (CLC) 2-Year All-In Curriculum. The application displays memory verses from the curriculum, allowing users to select different Bible versions (ESV, NIV, and NASB) to aid in their memorization.
 
 ## Features
 
