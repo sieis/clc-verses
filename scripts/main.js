@@ -46,50 +46,25 @@ const displayVerses = (data) =>{
     const nivBtn = document.querySelector("#niv")
     const nasbBtn = document.querySelector("#nasb")
 
-    // show ESV verses; hide the others
-    function showESV(){
-        esv.forEach(e=>{
-            e.removeAttribute("hidden")
-        })
-        niv.forEach(e=>{
-            e.setAttribute("hidden",true)
-        })
-        nasb.forEach(e=>{
-            e.setAttribute("hidden",true)
-        })
-        esvBtn.classList.add("active")
-        nivBtn.classList.remove("active")
-        nasbBtn.classList.remove("active")
-    }
-    // show NIV verses; hide the others
-    function showNIV(){
-        esv.forEach(e=>{
-            e.setAttribute("hidden",true)
-        })
-        niv.forEach(e=>{
-            e.removeAttribute("hidden")
-        })
-        nasb.forEach(e=>{
-            e.setAttribute("hidden",true)
-        })
-        esvBtn.classList.remove("active")
-        nivBtn.classList.add("active")
-        nasbBtn.classList.remove("active")
-    }
-    // show NASB95 verses; hide the others
-    function showNASB(){
-        esv.forEach(e=>{
-            e.setAttribute("hidden",true)
-        })
-        niv.forEach(e=>{
-            e.setAttribute("hidden",true)
-        })
-        nasb.forEach(e=>{
-            e.removeAttribute("hidden")
-        })
-        esvBtn.classList.remove("active")
-        nivBtn.classList.remove("active")
-        nasbBtn.classList.add("active")
+    function showVersion(version) {
+        const versions = {
+            esv: { btn: esvBtn, elements: esv },
+            niv: { btn: nivBtn, elements: niv },
+            nasb: { btn: nasbBtn, elements: nasb }
+        };
+
+        // Loop through all versions to set the correct visibility and active class
+        for (const key in versions) {
+            const isSelected = key === version;
+            versions[key].elements.forEach(e => {
+                if (isSelected) {
+                    e.removeAttribute("hidden");
+                } else {
+                    e.setAttribute("hidden", true);
+                }
+            });
+            versions[key].btn.classList.toggle("active", isSelected);
+        }
     }
 
     // add eventListener to all the summaries
@@ -98,9 +73,9 @@ const displayVerses = (data) =>{
     });
 
     // add event listeners to the three buttons to change versions
-    esvBtn.addEventListener('click', showESV)
-    nivBtn.addEventListener('click', showNIV)
-    nasbBtn.addEventListener('click', showNASB)
+    esvBtn.addEventListener('click', () => showVersion('esv'))
+    nivBtn.addEventListener('click', () => showVersion('niv'))
+    nasbBtn.addEventListener('click', () => showVersion('nasb'))
 
     // only allow one details panel to be open at one time
     function closeOpenedDetails(){
@@ -112,6 +87,12 @@ const displayVerses = (data) =>{
         });
     }
 }
+
+
+
+
+
+
 
 
 
