@@ -57,9 +57,9 @@ const displayVerses = (data) =>{
         nasb.forEach(e=>{
             e.setAttribute("hidden",true)
         })
-        esvBtn.classList.add("btn-focus")
-        nivBtn.classList.remove("btn-focus")
-        nasbBtn.classList.remove("btn-focus")
+        esvBtn.classList.add("active")
+        nivBtn.classList.remove("active")
+        nasbBtn.classList.remove("active")
     }
     // show NIV verses; hide the others
     function showNIV(){
@@ -72,9 +72,9 @@ const displayVerses = (data) =>{
         nasb.forEach(e=>{
             e.setAttribute("hidden",true)
         })
-        esvBtn.classList.remove("btn-focus")
-        nivBtn.classList.add("btn-focus")
-        nasbBtn.classList.remove("btn-focus")
+        esvBtn.classList.remove("active")
+        nivBtn.classList.add("active")
+        nasbBtn.classList.remove("active")
     }
     // show NASB95 verses; hide the others
     function showNASB(){
@@ -87,9 +87,9 @@ const displayVerses = (data) =>{
         nasb.forEach(e=>{
             e.removeAttribute("hidden")
         })
-        esvBtn.classList.remove("btn-focus")
-        nivBtn.classList.remove("btn-focus")
-        nasbBtn.classList.add("btn-focus")
+        esvBtn.classList.remove("active")
+        nivBtn.classList.remove("active")
+        nasbBtn.classList.add("active")
     }
 
     // add eventListener to all the summaries

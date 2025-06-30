@@ -1,247 +1,152 @@
-/*
-  from https://www.joshwcomeau.com/css/custom-css-reset/
-*/
-/*
-  1. Use a more-intuitive box-sizing model.
-*/
-*, *::before, *::after {
+/* CSS Reset */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
-  }
-  /*
-    2. Remove default margin
-  */
-  * {
     margin: 0;
-  }
-  /*
-    Typographic tweaks!
-    3. Add accessible line-height
-    4. Improve text rendering
-  */
-  body {
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
-  /*
-    5. Improve media defaults
-  */
-  img, picture, video, canvas, svg {
-    display: block;
-    max-width: 100%;
-  }
-  /*
-    6. Remove built-in form typography styles
-  */
-  input, button, textarea, select {
-    font: inherit;
-  }
-  /*
-    7. Avoid text overflows
-  */
-  p, h1, h2, h3, h4, h5, h6 {
-    overflow-wrap: break-word;
-  }
-  /*
-    8. Create a root stacking context
-  */
-  #root, #__next {
-    isolation: isolate;
-  }
-  /* text-size-adjust per https://andy-bell.co.uk/a-more-modern-css-reset/ */
-  html {
+    padding: 0;
+}
+
+html {
     -moz-text-size-adjust: none;
     -webkit-text-size-adjust: none;
     text-size-adjust: none;
-  }
+}
 
-  /* 
-    My styles
-   */
+body {
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-color: #f0f2f5;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+}
 
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
 
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
 
-  body{
-    background-color: #fafafa;
-    font-family: 'Rubik', sans-serif;
-  }
-  .hero{
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    justify-content: center;
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* App Styles */
+.hero {
+    background: linear-gradient(to right, #007bff, #0056b3);
+    color: #fff;
+    padding: 3rem 1rem;
     text-align: center;
-    padding: 20px;
-    width: 100%;
-    gap: 20px;
-    background-color: #ff6d4d;
-  }
+}
 
-  .hero img{
-    margin: auto;
-    max-width: 30%;
-  }
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
 
-  @media only screen and (max-width: 600px) {
-    .hero{
-      gap: 30px;
-    }
-  }
+.hero-content p {
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
 
-  h1{
-    font-size: 2.5rem;
-    line-height: 1;
-    padding: 20px 0;
-  }
-
-  h2{
-    padding: 1rem 0;
-    font-weight: 400;
-  }
-
-  .text{
-    text-align: center;
-    padding: 1rem 0 0 0;
-  }
-
-  #verses{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;
-  }
-  .sticky{
-    position: -webkit-sticky;
+.controls {
+    padding: 1.5rem 1rem;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
     position: sticky;
     top: 0;
-    background: #fafafa;
-    padding: 1rem 0;
-    /* border: solid #151515 1px; */
-  }
+    z-index: 10;
+}
 
-  .btns{
+.buttons {
     display: flex;
     justify-content: center;
-    padding: 1rem;
-    gap: 2rem;
-    margin: auto;
-  }
-  
-  .btn{
-    background: #ff6d4d;
-    box-shadow: 2px 2px #fff, 7px 7px #151515;
-    color: #000;
-    border: solid 2px #151515;
+    gap: 1rem;
+}
+
+.btn {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
     border-radius: 25px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 700;
-    width: 150px;
-    padding: 10px;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-    transition: 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    padding: 0.75rem 1.5rem;
     cursor: pointer;
-    overflow: hidden;
-    transition-delay: 0s !important;
-  }
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
 
-  .btn:hover::before {
-    width: 100%;
-    left: 0;
-    right: unset;
-  }
-
-  .btn::before {
-    position: absolute;
-    content: "";
-    top: 0;
-    right: 0;
-    width: 0%;
-    height: 100%;
-    background: #d12600;
-    z-index: -1;
-    transition: 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
-  }
-  
-  .btn:hover{
-    box-shadow: 0 0 #fff, 0 0 #151515;
-  }
-
-  .btn-focus{
-    background-color: #d12600;
+.btn.active {
+    background-color: #007bff;
     color: #fff;
-  }
-  
-  summary{
-    font-weight: bold;
+    border-color: #007bff;
+}
+
+.btn:hover:not(.active) {
+    background-color: #f0f2f5;
+}
+
+.verses-container {
+    padding: 2rem 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+details {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.3s;
+}
+
+details[open] {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+summary {
+    font-weight: 700;
     cursor: pointer;
-    padding: 0.5rem 0;
-  }
-  
-  details{
-    width: 98%;
-    padding: 5px 20px;
-    margin: 3px 0;
-    border: solid rgb(35, 35, 35) .5px;
-    border-radius: 1.2rem;
-  }
-  details[open]{
-    padding-bottom: 1rem;
-  }
+    padding: 1rem;
+    outline: none;
+}
 
-  footer{
+details div {
+    padding: 0 1rem 1rem;
+    color: #555;
+}
+
+footer {
     text-align: center;
-    padding: 50px 0;
-  }
+    padding: 2rem 1rem;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    margin-top: 2rem;
+}
 
-  @media only screen and (max-width: 600px) {
-    .btn{
-      font-size: .8rem;
-      border: none;
-      border-radius: 20px;
-    }
-  }
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
 
-
-  /* setup desktop version */
-
-  @media only screen and (min-width: 700px){
-    h1{
-      font-size: 4.3rem;
-    }
-    h2{
-      padding: 0;
-    }
-    .hero{
-      margin-top:11px;
-      border-radius: 5px;
-      max-width: 1000px;
-    }
-    .hero-text{
-      display: flex;
-      padding: 5rem;
-    }
-    #mobile{
-      color: green;
-      display: none;
-    }
-    #desktop{
-      display: block;
-    }
-    main{
-      margin: auto;
-      max-width: 1000px;
-    }
-    details{
-      max-width: 700px;
-      background: #fff;
-    }
-    .hero-img{
-      margin: auto;
-    }
-    .hero img{
-      max-width: 50%;
-    }
-  }
+footer a:hover {
+    text-decoration: underline;
+}
