@@ -32,7 +32,7 @@ const displayVerses = (data) =>{
         v.appendChild(niv).classList.add("niv")
         v.appendChild(nasb).classList.add("nasb")
         // initialize with niv and nasb hidden
-        niv.setAttribute("hidden", true)
+        esv.setAttribute("hidden", true)
         nasb.setAttribute("hidden", true)
         // put each details element into the versesDiv div
         versesDiv.appendChild(v)
