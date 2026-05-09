@@ -93,7 +93,11 @@ window.versesData = {
         { ref: "1 Corinthians 12:26", text: {
           NIV: "If one part suffers, every part suffers with it; if one part is honored, every part rejoices with it.",
           ESV: "If one member suffers, all suffer together; if one member is honored, all rejoice together."
-        }}
+        }},
+        { ref: "Philippians 4:6-7", text: {
+          NIV: "do not be anxious about anything, but in everything, by prayer and petition with thanksgiving, present your requests to God. And the peace of God which transcends all understanding, will guard you hearts and minds in Christ Jesus.",
+          ESV: "do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus."
+        }},
       ]
     },
     {
@@ -101,10 +105,6 @@ window.versesData = {
       name: "Leading Your Family",
       color: "#6f8f3a",
       verses: [
-        { ref: "Philippians 4:6-7", text: {
-          NIV: "do not be anxious about anything, but in everything, by prayer and petition with thanksgiving, present your requests to God. And the peace of God which transcends all understanding, will guard you hearts and minds in Christ Jesus.",
-          ESV: "do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus."
-        }},
         { ref: "Ephesians 5:21", text: {
           NIV: "Submit to one another out of reverence for Christ.",
           ESV: "submitting to one another out of reverence for Christ."
@@ -128,6 +128,10 @@ window.versesData = {
         { ref: "Hebrews 13:4", text: {
           NIV: "Marriage should be honored by all, and the marriage bed kept pure, for God will judge the adulterer and all the sexually immoral.",
           ESV: "Let marriage be held in honor among all, and let the marriage bed be undefiled, for God will judge the sexually immoral and adulterous."
+        }},
+        { ref: "Deuteronomy 6:6-7", text: {
+          NIV: "These commandments that I give you today are to be on your hearts. Impress them on your children. Talk about them when you sit at home and when you walk along the road, when you lie down and when you get up.",
+          ESV: "And these words that I command you today shall be on your heart. You shall teach them diligently to your children, and shall talk of them when you sit in your house, and when you walk by the way, and when you lie down, and when you rise."
         }}
       ]
     },
@@ -136,10 +140,6 @@ window.versesData = {
       name: "Business by the Book",
       color: "#2d7048",
       verses: [
-        { ref: "Deuteronomy 6:6-7", text: {
-          NIV: "These commandments that I give you today are to be on your hearts. Impress them on your children. Talk about them when you sit at home and when you walk along the road, when you lie down and when you get up.",
-          ESV: "And these words that I command you today shall be on your heart. You shall teach them diligently to your children, and shall talk of them when you sit in your house, and when you walk by the way, and when you lie down, and when you rise."
-        }},
         { ref: "Proverbs 3:5-6", text: {
           NIV: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
           ESV: "Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge him, and he will make straight your paths."
@@ -151,6 +151,10 @@ window.versesData = {
         { ref: "Joshua 1:8", text: {
           NIV: "Keep this Book of the Law always on your lips; meditate on it day and night, so that you may be careful to do everything written in it. Then you will be prosperous and successful.",
           ESV: "This Book of the Law shall not depart from your mouth, but you shall meditate on it day and night, so that you may be careful to do according to all that is written in it. For then you will make your way prosperous, and then you will have good success."
+        }},
+        { ref: "Micah 6:8", text: {
+          NIV: "He has shown you, O mortal, what is good. And what does the Lord require of you? To act justly and to love mercy and to walk humbly with your God.",
+          ESV: "He has told you, O man, what is good; and what does the Lord require of you but to do justice, and to love kindness, and to walk humbly with your God?"
         }}
       ]
     },
@@ -159,10 +163,6 @@ window.versesData = {
       name: "Apologetics",
       color: "#1f7a8c",
       verses: [
-        { ref: "Micah 6:8", text: {
-          NIV: "He has shown you, O mortal, what is good. And what does the Lord require of you? To act justly and to love mercy and to walk humbly with your God.",
-          ESV: "He has told you, O man, what is good; and what does the Lord require of you but to do justice, and to love kindness, and to walk humbly with your God?"
-        }},
         { ref: "Romans 1:16", text: {
           NIV: "For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes: first to the Jew, then to the Gentile.",
           ESV: "For I am not ashamed of the gospel, for it is the power of God for salvation to everyone who believes, to the Jew first and also to the Greek."
@@ -170,6 +170,10 @@ window.versesData = {
         { ref: "John 10:10", text: {
           NIV: "The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full.",
           ESV: "The thief comes only to steal and kill and destroy. I came that they may have life and have it abundantly."
+        }},
+        { ref: "Romans 3:23", text: {
+          NIV: "for all have sinned and fall short of the glory of God,",
+          ESV: "for all have sinned and fall short of the glory of God,"
         }}
       ]
     },
@@ -178,10 +182,6 @@ window.versesData = {
       name: "Money or the Master",
       color: "#2855a8",
       verses: [
-        { ref: "Romans 3:23", text: {
-          NIV: "for all have sinned and fall short of the glory of God,",
-          ESV: "for all have sinned and fall short of the glory of God,"
-        }},
         { ref: "Matthew 6:24", text: {
           NIV: "No one can serve two masters. Either you will hate the one and love the other, or you will be devoted to the one and despise the other. You cannot serve both God and money.",
           ESV: "No one can serve two masters, for either he will hate the one and love the other, or he will be devoted to the one and despise the other. You cannot serve God and money."
