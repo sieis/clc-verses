@@ -1,0 +1,437 @@
+:root {
+  --canvas: #181818;
+  --canvas-elevated: #303030;
+  --hairline: #303030;
+  --ink: #ffffff;
+  --body: #969696;
+  --muted: #666666;
+
+  --xxxs: 4px;  --xxs: 8px;  --xs: 16px;  --sm: 24px;
+  --md: 32px;   --lg: 48px;  --xl: 64px;  --xxl: 96px;
+
+  --ease-out: cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+/* ===== HEADER ===== */
+.site-header {
+  padding: var(--xl) var(--md) var(--lg);
+  border-bottom: 1px solid var(--hairline);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: var(--sm);
+}
+.site-header h1 {
+  font-size: 60px;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -1.2px;
+  margin-bottom: var(--sm);
+  max-width: 920px;
+}
+.site-header .lede {
+  color: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+  max-width: 680px;
+}
+/* ===== SEGMENTED TOGGLES (translation + view) ===== */
+.header-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--xs);
+  flex-wrap: wrap;
+}
+.translation-toggle,
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--hairline);
+  background: var(--canvas-elevated);
+}
+.translation-toggle button,
+.view-toggle button {
+  padding: 14px 24px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--body);
+  transition: background 0.18s var(--ease-out), color 0.18s var(--ease-out);
+}
+.translation-toggle button:hover,
+.view-toggle button:hover { color: var(--ink); }
+.translation-toggle button.is-active,
+.view-toggle button.is-active {
+  background: var(--ink);
+  color: var(--canvas);
+}
+.translation-toggle .divider,
+.view-toggle .divider {
+  width: 1px;
+  background: var(--hairline);
+}
+
+/* ===== MAIN ===== */
+main {
+  padding: var(--xl) var(--md) var(--xxl);
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--xs);
+}
+.section-head {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+.modules-section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--md);
+  margin-bottom: var(--lg);
+  flex-wrap: wrap;
+}
+/* ===== SCENES ===== */
+.grid-scene[hidden],
+.all-scene[hidden],
+.module-grid[hidden],
+.modules-section-head[hidden] { display: none !important; }
+
+.verse-card-module {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--xxs);
+}
+
+/* ===== VIEW TRANSITIONS — module ⇄ panel morph =====
+   Names applied via CSS classes (more reliable than setting inline style on a
+   brand-new node from JS — the property assignment can no-op silently if the
+   browser doesn't recognize the JS alias). The panel always carries the name
+   because at most one panel exists at a time; cards get the name on demand. */
+.module-card.is-vt-source { view-transition-name: active-module; }
+.panel { view-transition-name: active-module; }
+
+::view-transition-group(active-module) {
+  animation-duration: 350ms;
+  animation-timing-function: cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+::view-transition-old(active-module),
+::view-transition-new(active-module) {
+  animation-duration: 200ms;
+  animation-timing-function: cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+  animation-timing-function: cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+
+/* ===== MODULE GRID ===== */
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--xs);
+}
+.module-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--canvas-elevated);
+  cursor: pointer;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  user-select: none;
+  width: 100%;
+  position: relative;
+  transition: transform 0.18s var(--ease-out);
+  will-change: transform, opacity;
+}
+.module-card:hover { transform: translateY(-2px); }
+.module-card:active { transform: translateY(0); }
+
+.module-card .card-top {
+  flex: 1 1 55%;
+  background: var(--accent, var(--canvas-elevated));
+  position: relative;
+}
+.module-card .card-top::after {
+  content: "";
+  position: absolute;
+  bottom: var(--sm);
+  left: var(--sm);
+  width: 24px;
+  height: 1px;
+  background: rgba(255,255,255,0.6);
+}
+.module-card .card-bottom {
+  flex: 0 0 auto;
+  padding: var(--sm);
+  border-top: 1px solid var(--hairline);
+}
+.module-card .module-num {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--body);
+  margin-bottom: var(--xxs);
+}
+.module-card .module-name {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+/* ===== PANEL ===== */
+.panel-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--md);
+  margin-bottom: var(--md);
+  padding-bottom: var(--sm);
+  border-bottom: 1px solid var(--hairline);
+}
+.panel-title {
+  font-size: 40px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  line-height: 1.1;
+}
+.panel-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: var(--sm);
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xxs);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+  padding: var(--xs) var(--sm);
+  border: 1px solid var(--ink);
+  background: transparent;
+  white-space: nowrap;
+  height: 48px;
+  user-select: none;
+  transition: background 0.15s var(--ease-out), color 0.15s var(--ease-out);
+}
+.back-link:hover { background: var(--ink); color: var(--canvas); }
+
+.panel-controls {
+  display: flex;
+  align-items: stretch;
+  gap: var(--xs);
+  flex-wrap: wrap;
+}
+.panel-controls .translation-toggle { height: 48px; }
+
+/* ===== VERSE CARDS ===== */
+.verse-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--xs);
+  align-items: start;
+}
+.verse-card {
+  background: var(--canvas-elevated);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  transition: border-color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  will-change: transform;
+}
+.verse-card:hover { transform: translateY(-2px); }
+.verse-card.is-open { border-color: var(--accent, var(--ink)); }
+.verse-card.is-open .verse-top { height: 40px; }
+.all-verses-grid .verse-top { height: 40px; }
+
+.verse-top {
+  height: 120px;
+  background: var(--accent, var(--canvas-elevated));
+  position: relative;
+  transition: height 0.36s var(--ease-out);
+}
+.verse-top::after {
+  content: "";
+  position: absolute;
+  bottom: var(--xs);
+  left: var(--sm);
+  width: 18px;
+  height: 1px;
+  background: rgba(255,255,255,0.55);
+}
+.verse-ref {
+  padding: var(--sm);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+/* CSS-only accordion via grid-template-rows. minmax(0, …) is required:
+   plain `0fr` resolves to `minmax(auto, 0fr)` where auto = min-content,
+   so the closed row floors at one line of text and leaks. */
+.verse-text-inner {
+  display: grid;
+  grid-template-rows: minmax(0, 0fr);
+  overflow: hidden;
+  transition: grid-template-rows 0.36s var(--ease-out);
+}
+.verse-card.is-open .verse-text-inner {
+  grid-template-rows: minmax(0, 1fr);
+}
+.verse-text-inner > .verse-text {
+  min-height: 0;
+  overflow: hidden;
+}
+.verse-text {
+  padding: var(--sm);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--body);
+  border-top: 1px solid var(--hairline);
+}
+.verse-text .niv,
+.verse-text .esv { display: block; }
+body[data-translation="NIV"] .verse-text .esv { display: none; }
+body[data-translation="ESV"] .verse-text .niv { display: none; }
+
+/* ===== FOOTER ===== */
+footer {
+  border-top: 1px solid var(--hairline);
+  padding: var(--lg) var(--md);
+  max-width: 1280px;
+  margin: 0 auto;
+  color: var(--body);
+  font-size: 13px;
+  line-height: 1.55;
+  display: flex;
+  flex-direction: column;
+  gap: var(--md);
+}
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--md);
+}
+.footer-row .mark {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.attribution {
+  max-width: 720px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.byline {
+  font-size: 13px;
+  color: var(--ink);
+}
+.byline strong { font-weight: 600; }
+.socials {
+  display: flex;
+  gap: var(--sm);
+  flex-wrap: wrap;
+}
+.socials a {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 10px var(--sm);
+  border: 1px solid var(--hairline);
+  transition: background 0.15s var(--ease-out), color 0.15s var(--ease-out), border-color 0.15s var(--ease-out);
+}
+.socials a:hover {
+  background: var(--ink);
+  color: var(--canvas);
+  border-color: var(--ink);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .module-grid { grid-template-columns: repeat(3, 1fr); }
+  .site-header h1 { font-size: 48px; letter-spacing: -0.96px; }
+  .panel-title { font-size: 32px; }
+}
+@media (max-width: 720px) {
+  .module-grid { grid-template-columns: repeat(2, 1fr); }
+  .site-header { padding: var(--lg) var(--sm) var(--md); }
+  .site-header h1 { font-size: 34px; letter-spacing: -0.68px; }
+  main { padding: var(--lg) var(--sm) var(--xl); }
+  .panel-header { flex-direction: column; align-items: flex-start; gap: var(--sm); }
+  .panel-title { font-size: 28px; }
+  .modules-section-head { flex-direction: column; align-items: flex-start; }
+  footer { padding: var(--md) var(--sm); }
+}
+@media (max-width: 420px) {
+  .module-grid { grid-template-columns: 1fr 1fr; gap: var(--xxs); }
+  .verse-grid  { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

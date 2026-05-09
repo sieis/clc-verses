@@ -1,69 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Document Title -->
-    <title>CLC Memory Verses</title>
-    <!-- Meta Description -->
-    <meta name="description" content="Reference for all memory verses in CLC 2 Year All-In Curriculum">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLC Verses — All-In Scripture Memorization</title>
+<meta name="description" content="Reference for all memory verses in CLC 2 Year All-In Curriculum">
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://clc-verses.netlify.app/">
-    <meta property="og:title" content="CLC Verses">
-    <meta property="og:image" content="https://raw.githubusercontent.com/sieis/clc-verses/8b520c6972a727e28d7e8974b9704c9c4883464c/assets/twitterimg.png">
-    <meta property="og:description" content="Reference for all memory verses in CLC 2 Year All-In Curriculum">
-    <meta property="og:site_name" content="CLC Verses">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://clc-verses.netlify.app/">
+<meta property="og:title" content="CLC Verses">
+<meta property="og:image" content="https://raw.githubusercontent.com/sieis/clc-verses/8b520c6972a727e28d7e8974b9704c9c4883464c/assets/twitterimg.png">
+<meta property="og:description" content="Reference for all memory verses in CLC 2 Year All-In Curriculum">
+<meta property="og:site_name" content="CLC Verses">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:creator" content="@eamonncottrell">
-    <meta name="twitter:url" content="https://clc-verses.netlify.app/">
-    <meta name="twitter:title" content="CLC Verses">
-    <meta name="twitter:description" content="Reference for all memory verses in CLC 2 Year All-In Curriculum">
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/sieis/clc-verses/8b520c6972a727e28d7e8974b9704c9c4883464c/assets/twitterimg.png">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@eamonncottrell">
+<meta name="twitter:url" content="https://clc-verses.netlify.app/">
+<meta name="twitter:title" content="CLC Verses">
+<meta name="twitter:description" content="Reference for all memory verses in CLC 2 Year All-In Curriculum">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/sieis/clc-verses/8b520c6972a727e28d7e8974b9704c9c4883464c/assets/twitterimg.png">
 
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Favicon stuff -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
 </head>
-<body>
-    <header class="hero">
-        <div class="hero-content">
-            <h1>CLC Memory Verses</h1>
-            <p>A scripture memory tool for CLC's 2 Year Program. Select your preferred version below (ESV, NIV or NASB) and then toggle the verse references to display the full verse. Use like flashcards.</p>
+<body data-translation="NIV">
+
+<header class="site-header">
+  <div class="eyebrow" style="color: #da291c;">I've hidden your word in my heart that I might not sin against you.</div>
+  <h1>CLC Memory Verses</h1>
+  <p class="lede">A flashcard companion for the CLC 2 Year All-In program.</p>
+</header>
+
+<main>
+  <div class="grid-scene scene">
+    <div class="modules-section-head">
+      <div>
+        <div class="section-label">The All-In Program</div>
+        <h2 class="section-head">Choose a module to begin.</h2>
+      </div>
+      <div class="header-controls">
+        <div class="view-toggle" role="group" aria-label="View mode">
+          <button type="button" data-view="modules" aria-pressed="true">Modules</button>
+          <div class="divider"></div>
+          <button type="button" data-view="all" aria-pressed="false">All Verses</button>
         </div>
-    </header>
-    <main>
-        <div class="controls">
-            <div class="buttons">
-                <button class="btn" id="esv">ESV</button>
-                <button class="btn active" id="niv">NIV</button>
-                <button class="btn" id="nasb">NASB</button>
-            </div>
+        <div class="translation-toggle" role="group" aria-label="Bible translation">
+          <button type="button" data-tr="NIV" aria-pressed="true">NIV</button>
+          <div class="divider"></div>
+          <button type="button" data-tr="ESV" aria-pressed="false">ESV</button>
         </div>
-        <div id="verses" class="verses-container">
-            
+      </div>
+    </div>
+    <div class="module-grid"><!-- rendered by app.js --></div>
+    <div class="panel-container"><!-- panel injected here --></div>
+  </div>
+
+  <div class="all-scene scene" hidden>
+    <div class="modules-section-head">
+      <div>
+        <div class="section-label">The All-In Program</div>
+        <h2 class="section-head">Every verse, in order.</h2>
+      </div>
+      <div class="header-controls">
+        <div class="view-toggle" role="group" aria-label="View mode">
+          <button type="button" data-view="modules" aria-pressed="false">Modules</button>
+          <div class="divider"></div>
+          <button type="button" data-view="all" aria-pressed="true">All Verses</button>
         </div>
-    </main>
-    <footer>
-        <p>a project by <a href="https://eamonncottrell.com">Eamonn</a></p>
-        <p>say hey on <a href="https://www.linkedin.com/in/eamonncottrell/">LinkedIn</a> or <a href="https://www.youtube.com/@eamonncottrell">YouTube</a></p>
-        <p>open sourced on <a href="https://github.com/sieis/clc-verses">GitHub</a></p>
-    </footer>
-    <script src="scripts/main.js" type="module"></script>
+        <div class="translation-toggle" role="group" aria-label="Bible translation">
+          <button type="button" data-tr="NIV" aria-pressed="true">NIV</button>
+          <div class="divider"></div>
+          <button type="button" data-tr="ESV" aria-pressed="false">ESV</button>
+        </div>
+      </div>
+    </div>
+    <div class="verse-grid all-verses-grid"><!-- rendered by app.js --></div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-row">
+    <div class="mark">CLC Memory Verses</div>
+    <div class="byline">A project by <strong>Eamonn</strong></div>
+    <nav class="socials">
+      <a href="https://www.youtube.com/@eamonncottrell" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://www.linkedin.com/in/eamonncottrell/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://www.gotsheet.xyz/" target="_blank" rel="noopener noreferrer">Got Sheet</a>
+    </nav>
+  </div>
+  <div class="footer-row">
+    <div class="attribution" data-attribution></div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
