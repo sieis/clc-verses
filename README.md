@@ -1,6 +1,5 @@
 # CLC Verses
 
-# clc-verses
 Memory Verses for CLC All-In Groups
 
 [Live Site](https://clc-verses.netlify.app/)
@@ -10,41 +9,44 @@ Memory Verses for CLC All-In Groups
 
 ## Description
 
-This project is a simple web application designed to help users memorize Bible verses. It's specifically tailored for the [Christ Led Communities'](https://www.clchq.org/) (CLC) 2-Year All-In Curriculum. The application displays memory verses from the curriculum, allowing users to select different Bible versions (ESV, NIV, and NASB) to aid in their memorization.
+This project is a flashcard companion for the [Christ Led Communities'](https://www.clchq.org/) (CLC) 2-Year All-In Curriculum. It displays the memory verses from each module of the curriculum so members can review and memorize them, with support for two Bible translations (NIV and ESV).
 
 ## Features
 
-- **Verse Display**: The application dynamically loads and displays a list of memory verses from a JSON file.
-- **Version Selection**: Users can switch between three different Bible versions (ESV, NIV, and NASB) to view the verses in their preferred translation.
-- **Responsive Design**: The application is designed to be responsive and work on both desktop and mobile devices.
-- **User-Friendly Interface**: The interface is clean and simple, with a focus on readability and ease of use.
+- **Module View**: Verses are organized into 12 color-coded modules matching the All-In curriculum. Click a module card to open its verse set.
+- **All Verses View**: A flat list of every verse across all modules, with each card labeled by module.
+- **Translation Toggle**: Switch between NIV and ESV on any screen — the active translation persists as you navigate.
+- **Accordion Verse Cards**: Click a verse reference to expand it and read the full text; clicking another card collapses the previous one.
+- **Responsive Design**: Works on both desktop and mobile devices.
+- **Smooth Transitions**: Uses the View Transitions API where supported, with a FLIP/fade fallback for other browsers.
 
 ## Technologies Used
 
-- **HTML**: The basic structure of the web page.
-- **CSS**: For styling the application and ensuring a responsive design.
-- **JavaScript**: To dynamically load the verses, handle user interactions, and manage the version selection.
-- **JSON**: To store the memory verses and their different translations.
+- **HTML** — page structure
+- **CSS** — styling and responsive layout
+- **JavaScript** — rendering, module navigation, translation switching, and animations
+- **data.js** — all verse data and translation text stored as a plain JS object
 
 ## How to Use
 
-1. **Open the application**: The application can be accessed through the live site link provided below.
-2. **Select a version**: Click on one of the version buttons (ESV, NIV, or NASB) to choose the Bible translation you want to use.
-3. **View the verses**: The verses will be displayed in a list. Click on a verse reference to expand it and view the full text.
+1. **Open the application** at [https://clc-verses.netlify.app/](https://clc-verses.netlify.app/).
+2. **Choose a view**: Use the **Modules / All Verses** toggle to browse by module or see every verse at once.
+3. **Select a translation**: Click **NIV** or **ESV** to switch Bible versions.
+4. **Open a module**: In Modules view, click any module card to open its verse list.
+5. **Read a verse**: Click a verse reference card to expand it and reveal the full text. Click again (or click another card) to collapse it.
+6. **Go back**: Use the **← All Modules** button to return to the module grid.
 
 ## Live Site
 
-The application is hosted on Netlify and can be accessed here: [https://clc-verses.netlify.app/](https://clc-verses.netlify.app/)
+[https://clc-verses.netlify.app/](https://clc-verses.netlify.app/)
 
 ## Contributing
 
-If you'd like to contribute to the project, please follow these steps:
-
-1. **Fork the repository**: Create a fork of the repository to your own GitHub account.
-2. **Create a new branch**: Create a new branch for your changes.
-3. **Make your changes**: Make your desired changes to the codebase.
-4. **Commit and push your changes**: Commit your changes and push them to your forked repository.
-5. **Create a pull request**: Create a pull request to merge your changes into the main repository.
+1. **Fork the repository** to your own GitHub account.
+2. **Create a new branch** for your changes.
+3. **Make your changes** to the codebase.
+4. **Commit and push** your changes to your fork.
+5. **Open a pull request** to merge into the main repository.
 
 ## License
 
