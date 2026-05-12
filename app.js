@@ -203,9 +203,12 @@
 
     if (card) card.classList.add(VT_SOURCE_CLASS);
 
+    const siteHeader = document.querySelector('.site-header');
+
     const swap = () => {
       grid.hidden = true;
       if (sectionHead) sectionHead.hidden = true;
+      if (siteHeader) siteHeader.hidden = true;
       renderPanel(moduleId);
       window.scrollTo(0, 0);
     };
@@ -233,11 +236,14 @@
     const grid = document.querySelector('.module-grid');
     const sectionHead = document.querySelector('.grid-scene .modules-section-head');
 
+    const siteHeader = document.querySelector('.site-header');
+
     const swap = () => {
       panelContainer.innerHTML = '';
       state.activeModule = null;
       grid.hidden = false;
       if (sectionHead) sectionHead.hidden = false;
+      if (siteHeader) siteHeader.hidden = false;
       const card = document.querySelector(`.module-card[data-module="${moduleId}"]`);
       if (card) card.classList.add(VT_SOURCE_CLASS);
     };
@@ -264,11 +270,14 @@
     const moduleGrid = document.querySelector('.module-grid');
     const moduleSectionHead = document.querySelector('.grid-scene .modules-section-head');
 
+    const siteHeader = document.querySelector('.site-header');
+
     /* Any open module panel is closed when view changes. */
     panelContainer.innerHTML = '';
     state.activeModule = null;
     if (moduleGrid) moduleGrid.hidden = false;
     if (moduleSectionHead) moduleSectionHead.hidden = false;
+    if (siteHeader) siteHeader.hidden = false;
 
     if (view === 'all') {
       gridScene.hidden = true;
