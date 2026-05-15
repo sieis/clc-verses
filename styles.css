@@ -64,9 +64,9 @@ button {
 /* ===== SEGMENTED TOGGLES (translation + view) ===== */
 .header-controls {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: var(--xs);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .translation-toggle,
 .view-toggle {
@@ -120,11 +120,14 @@ main {
 }
 .modules-section-head {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  align-items: center;
   gap: var(--md);
   margin-bottom: var(--lg);
-  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--canvas);
+  padding: var(--xs) 0;
 }
 /* ===== SCENES ===== */
 .grid-scene[hidden],
@@ -416,12 +419,28 @@ footer {
   main { padding: var(--lg) var(--sm) var(--xl); }
   .panel-header { flex-direction: column; align-items: flex-start; gap: var(--sm); }
   .panel-title { font-size: 28px; }
-  .modules-section-head { flex-direction: column; align-items: flex-start; }
+  .modules-section-head {
+    gap: var(--xs);
+    padding: var(--xxs) 0;
+    margin-bottom: var(--md);
+  }
+  .translation-toggle button,
+  .view-toggle button {
+    padding: 10px 14px;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+  }
   footer { padding: var(--md) var(--sm); }
 }
 @media (max-width: 420px) {
   .module-grid { grid-template-columns: 1fr 1fr; gap: var(--xxs); }
   .verse-grid  { grid-template-columns: 1fr; }
+  .translation-toggle button,
+  .view-toggle button {
+    padding: 8px 10px;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
