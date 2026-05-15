@@ -117,24 +117,22 @@
       class: 'panel',
       style: { '--accent': mod.color }
     }, [
-      el('div', { class: 'panel-header' }, [
-        el('div', {}, [
-          el('div', { class: 'panel-eyebrow', style: { color: mod.color } },
-            `Module ${String(mod.id).padStart(2, '0')}`),
-          el('h2', { class: 'panel-title' }, mod.name)
-        ]),
-        el('div', { class: 'panel-controls' }, [
-          el('div', { class: 'translation-toggle', role: 'group', 'aria-label': 'Bible translation' }, [
-            el('button', { type: 'button', dataset: { tr: 'NIV' } }, 'NIV'),
-            el('div', { class: 'divider' }),
-            el('button', { type: 'button', dataset: { tr: 'ESV' } }, 'ESV')
-          ]),
-          el('button', {
-            class: 'back-link',
-            type: 'button',
-            onclick: closeModule
-          }, '← All Modules')
+      el('div', { class: 'panel-toolbar' }, [
+        el('button', {
+          class: 'back-link',
+          type: 'button',
+          onclick: closeModule
+        }, '← All Modules'),
+        el('div', { class: 'translation-toggle', role: 'group', 'aria-label': 'Bible translation' }, [
+          el('button', { type: 'button', dataset: { tr: 'NIV' } }, 'NIV'),
+          el('div', { class: 'divider' }),
+          el('button', { type: 'button', dataset: { tr: 'ESV' } }, 'ESV')
         ])
+      ]),
+      el('div', { class: 'panel-header' }, [
+        el('div', { class: 'panel-eyebrow', style: { color: mod.color } },
+          `Module ${String(mod.id).padStart(2, '0')}`),
+        el('h2', { class: 'panel-title' }, mod.name)
       ]),
       el('div', { class: 'verse-grid' },
         mod.verses.map(v => renderVerseCard(v))
