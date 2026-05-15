@@ -224,11 +224,19 @@ main {
 }
 
 /* ===== PANEL ===== */
-.panel-header {
+.panel-toolbar {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--md);
+  align-items: center;
+  gap: var(--xs);
+  flex-wrap: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--canvas);
+  padding: var(--xs) 0;
+  margin-bottom: var(--md);
+}
+.panel-header {
   margin-bottom: var(--md);
   padding-bottom: var(--sm);
   border-bottom: 1px solid var(--hairline);
@@ -256,23 +264,14 @@ main {
   text-transform: uppercase;
   color: var(--ink);
   cursor: pointer;
-  padding: var(--xs) var(--sm);
+  padding: 14px var(--sm);
   border: 1px solid var(--ink);
   background: transparent;
   white-space: nowrap;
-  height: 48px;
   user-select: none;
   transition: background 0.15s var(--ease-out), color 0.15s var(--ease-out);
 }
 .back-link:hover { background: var(--ink); color: var(--canvas); }
-
-.panel-controls {
-  display: flex;
-  align-items: stretch;
-  gap: var(--xs);
-  flex-wrap: wrap;
-}
-.panel-controls .translation-toggle { height: 48px; }
 
 /* ===== VERSE CARDS ===== */
 .verse-grid {
@@ -417,15 +416,20 @@ footer {
   .site-header { padding: var(--lg) var(--sm) var(--md); }
   .site-header h1 { font-size: 34px; letter-spacing: -0.68px; }
   main { padding: var(--lg) var(--sm) var(--xl); }
-  .panel-header { flex-direction: column; align-items: flex-start; gap: var(--sm); }
   .panel-title { font-size: 28px; }
-  .modules-section-head {
+  .modules-section-head,
+  .panel-toolbar {
     gap: var(--xs);
     padding: var(--xxs) 0;
     margin-bottom: var(--md);
   }
   .translation-toggle button,
   .view-toggle button {
+    padding: 10px 14px;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+  }
+  .back-link {
     padding: 10px 14px;
     font-size: 12px;
     letter-spacing: 0.8px;
@@ -437,6 +441,11 @@ footer {
   .verse-grid  { grid-template-columns: 1fr; }
   .translation-toggle button,
   .view-toggle button {
+    padding: 8px 10px;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+  }
+  .back-link {
     padding: 8px 10px;
     font-size: 11px;
     letter-spacing: 0.4px;
