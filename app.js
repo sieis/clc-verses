@@ -110,6 +110,9 @@
 
   function renderPanel(moduleId) {
     const mod = data.modules.find(m => m.id === moduleId);
+    const idx = data.modules.findIndex(m => m.id === moduleId);
+    const prevMod = idx > 0 ? data.modules[idx - 1] : null;
+    const nextMod = idx >= 0 && idx < data.modules.length - 1 ? data.modules[idx + 1] : null;
     const container = document.querySelector('.panel-container');
     container.innerHTML = '';
 
@@ -118,11 +121,27 @@
       style: { '--accent': mod.color }
     }, [
       el('div', { class: 'panel-toolbar' }, [
-        el('button', {
-          class: 'back-link',
-          type: 'button',
-          onclick: closeModule
-        }, '← All Modules'),
+        el('div', { class: 'panel-nav' }, [
+          el('button', {
+            class: 'nav-link nav-prev',
+            type: 'button',
+            'aria-label': prevMod ? `Previous module: ${prevMod.name}` : 'No previous module',
+            disabled: prevMod ? null : '',
+            onclick: prevMod ? () => goToModule(prevMod.id) : null
+          }, '←'),
+          el('button', {
+            class: 'back-link',
+            type: 'button',
+            onclick: closeModule
+          }, 'All Modules'),
+          el('button', {
+            class: 'nav-link nav-next',
+            type: 'button',
+            'aria-label': nextMod ? `Next module: ${nextMod.name}` : 'No next module',
+            disabled: nextMod ? null : '',
+            onclick: nextMod ? () => goToModule(nextMod.id) : null
+          }, '→')
+        ]),
         el('div', { class: 'translation-toggle', role: 'group', 'aria-label': 'Bible translation' }, [
           el('button', { type: 'button', dataset: { tr: 'NIV' } }, 'NIV'),
           el('div', { class: 'divider' }),
@@ -221,6 +240,30 @@
 
     done.finally(() => {
       if (card) card.classList.remove(VT_SOURCE_CLASS);
+      state.isAnimating = false;
+    });
+  }
+
+  function goToModule(moduleId) {
+    if (state.isAnimating) return;
+    if (moduleId === state.activeModule) return;
+    state.isAnimating = true;
+    state.activeModule = moduleId;
+
+    const swap = () => {
+      renderPanel(moduleId);
+      window.scrollTo(0, 0);
+    };
+
+    let done;
+    if (VT_SUPPORTED) {
+      done = document.startViewTransition(swap).finished.catch(() => {});
+    } else {
+      swap();
+      done = Promise.resolve();
+    }
+
+    done.finally(() => {
       state.isAnimating = false;
     });
   }
