@@ -273,6 +273,34 @@ main {
 }
 .back-link:hover { background: var(--ink); color: var(--canvas); }
 
+.panel-nav {
+  display: inline-flex;
+  align-items: stretch;
+  gap: var(--xxs);
+}
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 14px var(--xs);
+  min-width: 48px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  white-space: nowrap;
+  user-select: none;
+  transition: background 0.15s var(--ease-out), color 0.15s var(--ease-out), opacity 0.15s var(--ease-out);
+}
+.nav-link:hover:not(:disabled) { background: var(--ink); color: var(--canvas); }
+.nav-link:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
 /* ===== VERSE CARDS ===== */
 .verse-grid {
   display: grid;
@@ -434,6 +462,11 @@ footer {
     font-size: 12px;
     letter-spacing: 0.8px;
   }
+  .nav-link {
+    padding: 10px 10px;
+    min-width: 40px;
+    font-size: 14px;
+  }
   footer { padding: var(--md) var(--sm); }
 }
 @media (max-width: 420px) {
@@ -449,6 +482,11 @@ footer {
     padding: 8px 10px;
     font-size: 11px;
     letter-spacing: 0.4px;
+  }
+  .nav-link {
+    padding: 8px 8px;
+    min-width: 34px;
+    font-size: 13px;
   }
 }
 
