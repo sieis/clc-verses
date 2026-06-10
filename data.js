@@ -191,8 +191,8 @@ window.versesData = {
           ESV: "Not that I am speaking of being in need, for I have learned in whatever situation I am to be content. I know how to be brought low, and I know how to abound. In any and every circumstance, I have learned the secret of facing plenty and hunger, abundance and need."
         }},
         { ref: "Deuteronomy 8:17-18a", text: {
-          NIV: "You may say to yourself, “My power and the strength of my hands have produced this wealth for me.” But remember the LORD your God, for it is he who gives you the ability to produce wealth",
-          ESV: "Beware lest you say in your heart, “my power and the might of my hand have gotten me this wealth.” You shall remember the Lord your God, for it is he who gives you power to get wealth."
+          NIV: "You may say to yourself, “My power and the strength of my hands have produced this wealth for me.” But remember the Lord your God, for it is he who gives you the ability to produce wealth, and so confirms his covenant, which he swore to your ancestors, as it is today.",
+          ESV: "Beware lest you say in your heart, “my power and the might of my hand have gotten me this wealth.” You shall remember the Lord your God, for it is he who gives you power to get wealth, that he may confirm his covenant that he swore to your fathers, as it is this day."
         }}
       ]
     },
