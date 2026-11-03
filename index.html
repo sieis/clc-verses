@@ -113,7 +113,8 @@ button {
   background: var(--canvas-elevated);
 }
 .translation-toggle button,
-.view-toggle button {
+.view-toggle button,
+.view-toggle a {
   padding: 14px 24px;
   font-size: 13px;
   font-weight: 700;
@@ -122,8 +123,16 @@ button {
   color: var(--body);
   transition: background 0.18s var(--ease-out), color 0.18s var(--ease-out);
 }
+/* "Verse Wheel" is a link to a sub page, styled to sit in the toggle */
+.view-toggle a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
 .translation-toggle button:hover,
-.view-toggle button:hover { color: var(--ink); }
+.view-toggle button:hover,
+.view-toggle a:hover { color: var(--ink); }
 .translation-toggle button.is-active,
 .view-toggle button.is-active {
   background: var(--ink);
@@ -493,8 +502,10 @@ footer {
     padding: var(--xxs) 0;
     margin-bottom: var(--md);
   }
+  .header-controls { flex-wrap: wrap; row-gap: var(--xxs); }
   .translation-toggle button,
-  .view-toggle button {
+  .view-toggle button,
+  .view-toggle a {
     padding: 10px 14px;
     font-size: 12px;
     letter-spacing: 0.8px;
@@ -515,7 +526,8 @@ footer {
   .module-grid { grid-template-columns: 1fr 1fr; gap: var(--xxs); }
   .verse-grid  { grid-template-columns: 1fr; }
   .translation-toggle button,
-  .view-toggle button {
+  .view-toggle button,
+  .view-toggle a {
     padding: 8px 10px;
     font-size: 11px;
     letter-spacing: 0.4px;
@@ -586,6 +598,8 @@ footer {
           <button type="button" data-view="modules" aria-pressed="true">Modules</button>
           <div class="divider"></div>
           <button type="button" data-view="all" aria-pressed="false">All Verses</button>
+          <div class="divider"></div>
+          <a href="/verse-wheel/">Verse Wheel</a>
         </div>
         <div class="translation-toggle" role="group" aria-label="Bible translation">
           <button type="button" data-tr="NIV" aria-pressed="true">NIV</button>
@@ -605,6 +619,8 @@ footer {
           <button type="button" data-view="modules" aria-pressed="false">Modules</button>
           <div class="divider"></div>
           <button type="button" data-view="all" aria-pressed="true">All Verses</button>
+          <div class="divider"></div>
+          <a href="/verse-wheel/">Verse Wheel</a>
         </div>
         <div class="translation-toggle" role="group" aria-label="Bible translation">
           <button type="button" data-tr="NIV" aria-pressed="true">NIV</button>

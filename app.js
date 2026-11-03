@@ -374,6 +374,7 @@
   function setTranslation(tr) {
     state.translation = tr;
     document.body.dataset.translation = tr;
+    try { localStorage.setItem('clc-translation', tr); } catch (e) { /* ignore */ }
 
     document.querySelectorAll('.translation-toggle button').forEach(btn => {
       const active = btn.dataset.tr === tr;
@@ -401,6 +402,11 @@
 
   /* ===== INIT ===== */
   document.addEventListener('DOMContentLoaded', () => {
+    /* Same key the Verse Wheel page uses, so the choice follows you between pages. */
+    try {
+      const saved = localStorage.getItem('clc-translation');
+      if (saved === 'NIV' || saved === 'ESV') state.translation = saved;
+    } catch (e) { /* ignore */ }
     renderGrid();
     initTranslationToggle();
     initViewToggle();
