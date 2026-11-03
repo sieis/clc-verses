@@ -7,7 +7,10 @@
 
   const SESSION_KEY = 'clc-wheel-session-v1';
   const TRANSLATION_KEY = 'clc-translation';
-  const SPIN_MS = 6000;
+  /* Spin-time options: duration -> full turns before landing (fewer turns at
+     shorter times so it stays readable, but always enough to pass every slice). */
+  const SPEEDS = { 1000: [2, 3], 3000: [3, 5], 6000: [5, 7] };
+  const DEFAULT_MS = 6000;
   const HINT_WORDS = 5;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -33,6 +36,7 @@
   const state = {
     translation: 'NIV',
     mode: 'random',        // 'random' | 'norepeat'
+    spinMs: DEFAULT_MS,    // 1000 | 3000 | 6000
     counts: {},            // verse id -> times selected this session
     roundSeen: new Set(),  // verse ids seen in the current round (drives no-repeat)
     round: 1,
@@ -58,6 +62,7 @@
       state.last = byId.has(raw.last) ? raw.last : null;
       state.pending = byId.has(raw.pending) ? raw.pending : null;
       if (raw.mode === 'random' || raw.mode === 'norepeat') state.mode = raw.mode;
+      if (SPEEDS[raw.spinMs]) state.spinMs = raw.spinMs;
     } catch (e) { /* storage unavailable or corrupt — start fresh */ }
   }
 
@@ -70,7 +75,8 @@
         spins: state.spins,
         last: state.last,
         pending: state.pending,
-        mode: state.mode
+        mode: state.mode,
+        spinMs: state.spinMs
       }));
     } catch (e) { /* ignore */ }
   }
@@ -212,12 +218,14 @@
 
     const { index, rollover } = pickTarget();
 
-    /* Land somewhere inside the target slice (not on an edge), after 5–7 full turns. */
+    /* Land somewhere inside the target slice (not on an edge), after a few full turns. */
     const within = (0.2 + Math.random() * 0.6) * SLICE;
     const wanted = (360 - ((index * SLICE + within) % 360)) % 360;  // angle mod 360 that puts it under the pointer
     const current = ((state.angle % 360) + 360) % 360;
     const delta = (wanted - current + 360) % 360;
-    const turns = 5 + Math.floor(Math.random() * 3);
+    const [minTurns, maxTurns] = SPEEDS[state.spinMs];
+    const turns = minTurns + Math.floor(Math.random() * (maxTurns - minTurns + 1));
+    const duration = state.spinMs;
     const from = state.angle;
     const to = from + turns * 360 + delta;
 
@@ -253,7 +261,7 @@
     const t0 = performance.now();
 
     function frame(now) {
-      const x = Math.min(1, (now - t0) / SPIN_MS);
+      const x = Math.min(1, (now - t0) / duration);
       const angle = from + (to - from) * easeOutCubic(x);
       setAngle(angle);
 
@@ -426,6 +434,16 @@
     render();
   }
 
+  function setSpinMs(ms) {
+    state.spinMs = ms;
+    document.querySelectorAll('.speed-toggle button').forEach((btn) => {
+      const active = Number(btn.dataset.ms) === ms;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+    saveSession();
+  }
+
   function setTranslation(tr) {
     state.translation = tr;
     document.body.dataset.translation = tr;
@@ -450,11 +468,14 @@
     buildTracker();
     setTranslation(state.translation);
     setMode(state.mode);
+    setSpinMs(state.spinMs);
 
     document.querySelectorAll('.translation-toggle button')
       .forEach((btn) => btn.addEventListener('click', () => setTranslation(btn.dataset.tr)));
     document.querySelectorAll('.mode-toggle button')
       .forEach((btn) => btn.addEventListener('click', () => setMode(btn.dataset.mode)));
+    document.querySelectorAll('.speed-toggle button')
+      .forEach((btn) => btn.addEventListener('click', () => setSpinMs(Number(btn.dataset.ms))));
     spinBtn.addEventListener('click', spin);
 
     drawWheel();

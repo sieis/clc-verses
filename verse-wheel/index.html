@@ -276,8 +276,16 @@ main {
 .spin-btn:active:not(:disabled) { transform: scale(0.99); }
 .spin-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
-.mode-toggle { display: flex; }
-.mode-toggle button { flex: 1; text-align: center; padding-left: var(--xs); padding-right: var(--xs); }
+.mode-toggle, .speed-toggle { display: flex; }
+.control-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--body);
+  margin-bottom: var(--xxs);
+}
+.mode-toggle button, .speed-toggle button { flex: 1; text-align: center; padding-left: var(--xs); padding-right: var(--xs); }
 .mode-note {
   color: var(--body);
   font-size: 14px;
@@ -665,6 +673,17 @@ footer {
         <button type="button" data-mode="norepeat" aria-pressed="false">No Repeats</button>
       </div>
       <p class="mode-note"></p>
+
+      <div class="speed">
+        <div class="control-label" id="speed-label">Spin time</div>
+        <div class="segmented speed-toggle" role="group" aria-labelledby="speed-label">
+          <button type="button" data-ms="1000" aria-pressed="false">1 sec</button>
+          <div class="divider"></div>
+          <button type="button" data-ms="3000" aria-pressed="false">3 sec</button>
+          <div class="divider"></div>
+          <button type="button" data-ms="6000" aria-pressed="true">6 sec</button>
+        </div>
+      </div>
 
       <div class="stats" aria-label="Session stats">
         <div class="stat"><div class="stat-label">Spins</div><div class="stat-value" data-stat="spins">0</div></div>
