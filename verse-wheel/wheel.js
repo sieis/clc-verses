@@ -88,8 +88,9 @@
   const chipGrid = $('.chip-grid');
   const live = $('#live');
   const dlg = $('.result');
-  const hintBtn = $('.hint-btn', dlg);
+  const revealBtns = dlg.querySelectorAll('[data-reveal]');
   const hintEl = $('.hint', dlg);
+  let shown = null;                    // verse currently in the result card
 
   /* ===== WHEEL DRAWING =====
      Drawn once to a canvas; spinning is a CSS rotation of that canvas, so the
@@ -279,11 +280,24 @@
     return words.slice(0, n).join(' ') + (words.length > n ? '…' : '');
   }
 
-  function setHint(open) {
+  /* One reveal panel, two contents: the first five words, or the whole verse.
+     Pressing the active button again hides it. */
+  function setReveal(mode) {
+    const open = mode === 'hint' || mode === 'verse';
+    if (open && shown) {
+      const text = shown.text[state.translation];
+      $('.hint-label', dlg).textContent =
+        mode === 'hint' ? 'First five words' : `Full verse · ${state.translation}`;
+      $('.hint-text', dlg).textContent = mode === 'hint' ? firstWords(text, HINT_WORDS) : text;
+    }
     hintEl.classList.toggle('is-open', open);
+    hintEl.classList.toggle('is-verse', mode === 'verse');
     hintEl.inert = !open;
-    hintBtn.setAttribute('aria-expanded', String(open));
-    hintBtn.textContent = open ? 'Hide hint' : 'Show hint';
+    revealBtns.forEach((btn) => {
+      const on = btn.dataset.reveal === mode;
+      btn.setAttribute('aria-expanded', String(on));
+      btn.textContent = `${on ? 'Hide' : 'Show'} ${btn.dataset.reveal}`;
+    });
   }
 
   function showResult(v) {
@@ -293,10 +307,10 @@
     $('.result-eyebrow', dlg).textContent =
       `Module ${String(v.moduleId).padStart(2, '0')} · ${v.moduleName}`;
     $('.result-ref', dlg).textContent = v.ref;
-    $('.hint-text', dlg).textContent = firstWords(v.text[state.translation], HINT_WORDS);
     $('.result-count', dlg).textContent =
       times === 1 ? 'First time this session.' : `Selected ${times} times this session.`;
-    setHint(false);
+    shown = v;
+    setReveal(null);
 
     dlg.showModal();
     void dlg.offsetWidth;               // commit the start state so the transition runs
@@ -317,7 +331,10 @@
     else setTimeout(done, 240);
   }
 
-  hintBtn.addEventListener('click', () => setHint(!hintEl.classList.contains('is-open')));
+  revealBtns.forEach((btn) => btn.addEventListener('click', () => {
+    const active = btn.getAttribute('aria-expanded') === 'true';
+    setReveal(active ? null : btn.dataset.reveal);
+  }));
   dlg.addEventListener('click', (e) => {
     if (e.target === dlg) dismiss(false);                       // backdrop
     const act = e.target.closest('[data-act]');
