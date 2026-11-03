@@ -4,7 +4,7 @@
 
 This is a static, client-side web app (HTML/CSS/vanilla JavaScript, no build step or backend). Verse and translation text lives in `data.js` as a plain JS object; `app.js` handles rendering, module navigation, translation switching, and view transitions.
 
-Verses are organized into 12 color-coded modules matching the All-In curriculum, with a Module View and an All Verses view, a NIV/ESV translation toggle, and expandable accordion verse cards.
+Verses are organized into 12 color-coded modules matching the All-In curriculum, with a Module View and an All Verses view, a NIV/ESV translation toggle, and expandable accordion verse cards. A Verse Wheel sub page (/verse-wheel/) spins to a random verse, with true-random and no-repeat modes, a first-five-words hint, and a per-session pick tracker.
 
 ## Docs
 
@@ -15,6 +15,8 @@ Verses are organized into 12 color-coded modules matching the All-In curriculum,
 - [Live site](https://clc-verses.netlify.app/): the deployed application
 - [index.html](https://raw.githubusercontent.com/sieis/clc-verses/main/index.html): page markup
 - [app.js](https://raw.githubusercontent.com/sieis/clc-verses/main/app.js): application logic
+- [verse-wheel/index.html](https://raw.githubusercontent.com/sieis/clc-verses/main/verse-wheel/index.html): Verse Wheel page markup and styles
+- [verse-wheel/wheel.js](https://raw.githubusercontent.com/sieis/clc-verses/main/verse-wheel/wheel.js): Verse Wheel logic
 - [data.js](https://raw.githubusercontent.com/sieis/clc-verses/main/data.js): verse and translation data
 
 ## Optional

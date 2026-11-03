@@ -15,6 +15,7 @@ This project is a flashcard companion for the [Christ Led Communities'](https://
 
 - **Module View**: Verses are organized into 12 color-coded modules matching the All-In curriculum. Click a module card to open its verse set.
 - **All Verses View**: A flat list of every verse across all modules, with each card labeled by module.
+- **Verse Wheel** (`/verse-wheel/`): A wheel-of-fortune style spinner that cycles through every reference before landing on one. The pick appears full screen until dismissed, with a **Show hint** button (first five words) and a **Show verse** button (full text in the current translation). Choose a spin time (1, 3, or 6 seconds) and **True Random** or **No Repeats** (no verse comes up twice until all have been seen), and a session tracker shows which verses were picked and how many times. Session data lives in `sessionStorage`, so it survives a trip Home but resets when the tab closes.
 - **Translation Toggle**: Switch between NIV and ESV on any screen — the active translation persists as you navigate.
 - **Accordion Verse Cards**: Click a verse reference to expand it and read the full text; clicking another card collapses the previous one.
 - **Responsive Design**: Works on both desktop and mobile devices.
@@ -35,6 +36,7 @@ This project is a flashcard companion for the [Christ Led Communities'](https://
 4. **Open a module**: In Modules view, click any module card to open its verse list.
 5. **Read a verse**: Click a verse reference card to expand it and reveal the full text. Click again (or click another card) to collapse it.
 6. **Go back**: Use the **← All Modules** button to return to the module grid.
+7. **Spin for a verse**: Click **Verse Wheel** next to the view toggle, press **Spin**, and use **Show hint** or **Show verse** if you need a nudge. Use **← Home** to return.
 
 ## Live Site
 
