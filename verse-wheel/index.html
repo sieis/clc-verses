@@ -320,6 +320,35 @@ main {
 }
 .stat-value small { font-size: 14px; color: var(--muted); font-weight: 500; letter-spacing: 0; }
 
+/* ===== WHEEL SECTIONS ===== */
+.sections { margin-top: var(--xxl); }
+.section-note { color: var(--body); font-size: 14px; margin-bottom: var(--xs); }
+.section-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: var(--xxs);
+}
+.section-btn {
+  --accent: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--xs);
+  padding: 12px var(--xs);
+  background: var(--canvas-elevated);
+  border: 1px solid var(--hairline);
+  border-left: 4px solid var(--accent);
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 0.15s var(--ease-out), border-color 0.15s var(--ease-out);
+}
+.section-btn:hover:not(:disabled) { border-color: var(--ink); border-left-color: var(--accent); }
+.section-btn[aria-pressed="true"] { color: var(--ink); }
+.section-btn.is-partial { border-style: dashed; border-left-style: solid; }
+.section-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.section-n { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
 /* ===== TRACKER ===== */
 .tracker { margin-top: var(--xxl); }
 .tracker-head {
@@ -382,6 +411,20 @@ main {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
+.chip-remove {
+  margin-left: -8px;
+  width: 28px; height: 28px;
+  flex: none;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--muted);
+  border: 1px solid transparent;
+}
+.chip-remove:hover:not(:disabled) { color: var(--ink); border-color: var(--ink); }
+.chip-remove:disabled { opacity: 0.35; cursor: not-allowed; }
+.chip.is-off { opacity: 0.45; border-left-color: var(--hairline); }
+.chip.is-off .chip-ref { text-decoration: line-through; }
 .chip.is-hit { color: var(--ink); }
 .chip.is-hit .chip-count { background: var(--ink); color: var(--canvas); border-color: var(--ink); }
 .chip.is-new { animation: chip-pop 0.9s var(--ease-out); }
@@ -691,6 +734,18 @@ footer {
         <div class="stat"><div class="stat-label">Round</div><div class="stat-value" data-stat="round">1</div></div>
       </div>
     </div>
+  </section>
+
+  <section class="sections" aria-labelledby="sections-title">
+    <div class="tracker-head">
+      <div>
+        <div class="section-label">Customize</div>
+        <h2 class="section-head" id="sections-title">Wheel Sections</h2>
+      </div>
+      <button type="button" class="reset-btn restore-btn">Restore all</button>
+    </div>
+    <p class="section-note"></p>
+    <div class="section-list"><!-- rendered by wheel.js --></div>
   </section>
 
   <section class="tracker" aria-labelledby="tracker-title">
