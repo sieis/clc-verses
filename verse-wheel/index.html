@@ -256,6 +256,8 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.readout.is-final { cursor: pointer; }
+.readout.is-final:hover { border-color: var(--ink); border-left-color: var(--accent); }
 .readout.is-idle .readout-ref { color: var(--muted); font-weight: 500; }
 .readout.is-spinning .readout-ref { color: var(--body); }
 
@@ -722,9 +724,9 @@ footer {
         <div class="segmented speed-toggle" role="group" aria-labelledby="speed-label">
           <button type="button" data-ms="1000" aria-pressed="false">1 sec</button>
           <div class="divider"></div>
-          <button type="button" data-ms="3000" aria-pressed="false">3 sec</button>
+          <button type="button" data-ms="3000" aria-pressed="true">3 sec</button>
           <div class="divider"></div>
-          <button type="button" data-ms="6000" aria-pressed="true">6 sec</button>
+          <button type="button" data-ms="6000" aria-pressed="false">6 sec</button>
         </div>
       </div>
 

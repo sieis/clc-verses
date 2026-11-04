@@ -11,7 +11,7 @@
   /* Spin-time options: duration -> full turns before landing (fewer turns at
      shorter times so it stays readable, but always enough to pass every slice). */
   const SPEEDS = { 1000: [2, 3], 3000: [3, 5], 6000: [5, 7] };
-  const DEFAULT_MS = 6000;
+  const DEFAULT_MS = 3000;
   const HINT_WORDS = 5;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -234,10 +234,35 @@
   function setReadout(v, { label, mode }) {
     readout.classList.toggle('is-idle', mode === 'idle');
     readout.classList.toggle('is-spinning', mode === 'spinning');
+    readout.classList.toggle('is-final', mode === 'final' && !!v);
     readout.style.setProperty('--accent', v ? v.color : 'var(--hairline)');
     if (label != null) readoutLabel.textContent = label;
     readoutRef.textContent = v ? v.ref : 'Press spin';
+    /* Once there is a pick, the card can reopen its result. */
+    const clickable = mode === 'final' && !!v;
+    readout.tabIndex = clickable ? 0 : -1;
+    if (clickable) {
+      readout.setAttribute('role', 'button');
+      readout.setAttribute('aria-label', `Show ${v.ref} again`);
+      readout.removeAttribute('aria-hidden');
+    } else {
+      readout.removeAttribute('role');
+      readout.removeAttribute('aria-label');
+      readout.setAttribute('aria-hidden', 'true');
+    }
   }
+
+  function reopenLast() {
+    if (state.spinning || dlg.open || !state.last) return;
+    showResult(verses[byId.get(state.last)]);
+  }
+  readout.addEventListener('click', () => { if (readout.classList.contains('is-final')) reopenLast(); });
+  readout.addEventListener('keydown', (e) => {
+    if ((e.key === 'Enter' || e.key === ' ') && readout.classList.contains('is-final')) {
+      e.preventDefault();
+      reopenLast();
+    }
+  });
 
   function spin() {
     if (state.spinning || dlg.open) return;
