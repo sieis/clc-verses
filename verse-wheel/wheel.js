@@ -6,11 +6,12 @@
   }
 
   const SESSION_KEY = 'clc-wheel-session-v1';
+  const EXCLUDED_KEY = 'clc-wheel-excluded-v1';
   const TRANSLATION_KEY = 'clc-translation';
   /* Spin-time options: duration -> full turns before landing (fewer turns at
      shorter times so it stays readable, but always enough to pass every slice). */
   const SPEEDS = { 1000: [2, 3], 3000: [3, 5], 6000: [5, 7] };
-  const DEFAULT_MS = 6000;
+  const DEFAULT_MS = 3000;
   const HINT_WORDS = 5;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -28,9 +29,15 @@
       });
     });
   });
-  const N = verses.length;
-  const SLICE = 360 / N;
+  const TOTAL = verses.length;
   const byId = new Map(verses.map((v, i) => [v.id, i]));
+  const modules = data.modules.map((m) => ({ id: m.id, name: m.name, color: m.color }));
+
+  /* Verses currently on the wheel. Removing a verse or a whole section only
+     changes this list; the tracker still shows everything so it can be restored. */
+  let wheelVerses = verses.slice();
+  let N = wheelVerses.length;
+  let SLICE = 360 / N;
 
   /* ===== STATE ===== */
   const state = {
@@ -43,6 +50,7 @@
     spins: 0,
     last: null,            // id of the most recent pick
     pending: null,         // id of a result still waiting to be dismissed
+    excluded: new Set(),   // verse ids removed from the wheel
     angle: 0,              // wheel rotation in degrees (clockwise)
     spinning: false
   };
@@ -64,6 +72,23 @@
       if (raw.mode === 'random' || raw.mode === 'norepeat') state.mode = raw.mode;
       if (SPEEDS[raw.spinMs]) state.spinMs = raw.spinMs;
     } catch (e) { /* storage unavailable or corrupt — start fresh */ }
+  }
+
+  /* The wheel's contents persist across visits (localStorage), unlike the spin session. */
+  function loadExcluded() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(EXCLUDED_KEY) || '[]');
+      raw.forEach((id) => { if (byId.has(id)) state.excluded.add(id); });
+      if (state.excluded.size >= TOTAL) state.excluded.clear();
+    } catch (e) { /* ignore */ }
+  }
+  function saveExcluded() {
+    try { localStorage.setItem(EXCLUDED_KEY, JSON.stringify([...state.excluded])); } catch (e) { /* ignore */ }
+  }
+  function applyWheelSet() {
+    wheelVerses = verses.filter((v) => !state.excluded.has(v.id));
+    N = wheelVerses.length;
+    SLICE = 360 / N;
   }
 
   function saveSession() {
@@ -92,6 +117,8 @@
   const modeNote = $('.mode-note');
   const resetBtn = $('.reset-btn');
   const chipGrid = $('.chip-grid');
+  const sectionList = $('.section-list');
+  const sectionNote = $('.section-note');
   const live = $('#live');
   const dlg = $('.result');
   const revealBtns = dlg.querySelectorAll('[data-reveal]');
@@ -116,7 +143,7 @@
     const step = (Math.PI * 2) / N;
     const start = -Math.PI / 2;
 
-    verses.forEach((v, i) => {
+    wheelVerses.forEach((v, i) => {
       const a0 = start + i * step;
       const a1 = a0 + step;
       ctx.beginPath();
@@ -139,7 +166,7 @@
     const maxLen = R - hubR - 24;
     let fs = Math.max(8, Math.min(14, ((2 * Math.PI * R * 0.7) / N) * 0.5));
     ctx.font = `600 ${fs}px ${family}`;
-    const longest = Math.max(...verses.map((v) => ctx.measureText(v.ref).width));
+    const longest = Math.max(...wheelVerses.map((v) => ctx.measureText(v.ref).width));
     if (longest > maxLen) {
       fs = Math.max(6.5, fs * (maxLen / longest));
       ctx.font = `600 ${fs}px ${family}`;
@@ -148,7 +175,7 @@
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'middle';
-    verses.forEach((v, i) => {
+    wheelVerses.forEach((v, i) => {
       ctx.save();
       ctx.translate(c, c);
       ctx.rotate(start + (i + 0.5) * step);
@@ -171,20 +198,24 @@
      once every verse has been seen a new round starts (and the verse just
      picked is held out so it can't land twice in a row across the boundary). */
   function pickTarget() {
-    const rollover = state.roundSeen.size >= N;
+    const rollover = state.mode === 'norepeat' && roundLeft() === 0;
     const seen = rollover ? new Set() : state.roundSeen;
     let pool = [];
     for (let i = 0; i < N; i++) {
-      if (state.mode === 'random' || !seen.has(verses[i].id)) pool.push(i);
+      if (state.mode === 'random' || !seen.has(wheelVerses[i].id)) pool.push(i);
     }
     if (state.mode === 'norepeat' && rollover && N > 1) {
-      pool = pool.filter((i) => verses[i].id !== state.last);
+      pool = pool.filter((i) => wheelVerses[i].id !== state.last);
     }
     return { index: pool[Math.floor(Math.random() * pool.length)], rollover };
   }
 
+  function roundLeft() {
+    return wheelVerses.filter((v) => !state.roundSeen.has(v.id)).length;
+  }
+
   function commitPick(index, rollover) {
-    const v = verses[index];
+    const v = wheelVerses[index];
     if (rollover) {
       state.round += 1;
       state.roundSeen.clear();
@@ -203,16 +234,42 @@
   function setReadout(v, { label, mode }) {
     readout.classList.toggle('is-idle', mode === 'idle');
     readout.classList.toggle('is-spinning', mode === 'spinning');
+    readout.classList.toggle('is-final', mode === 'final' && !!v);
     readout.style.setProperty('--accent', v ? v.color : 'var(--hairline)');
     if (label != null) readoutLabel.textContent = label;
     readoutRef.textContent = v ? v.ref : 'Press spin';
+    /* Once there is a pick, the card can reopen its result. */
+    const clickable = mode === 'final' && !!v;
+    readout.tabIndex = clickable ? 0 : -1;
+    if (clickable) {
+      readout.setAttribute('role', 'button');
+      readout.setAttribute('aria-label', `Show ${v.ref} again`);
+      readout.removeAttribute('aria-hidden');
+    } else {
+      readout.removeAttribute('role');
+      readout.removeAttribute('aria-label');
+      readout.setAttribute('aria-hidden', 'true');
+    }
   }
+
+  function reopenLast() {
+    if (state.spinning || dlg.open || !state.last) return;
+    showResult(verses[byId.get(state.last)]);
+  }
+  readout.addEventListener('click', () => { if (readout.classList.contains('is-final')) reopenLast(); });
+  readout.addEventListener('keydown', (e) => {
+    if ((e.key === 'Enter' || e.key === ' ') && readout.classList.contains('is-final')) {
+      e.preventDefault();
+      reopenLast();
+    }
+  });
 
   function spin() {
     if (state.spinning || dlg.open) return;
     state.spinning = true;
     spinBtn.disabled = true;
     resetBtn.disabled = true;
+    setEditing(false);
     spinBtn.textContent = 'Spinning…';
     live.textContent = 'Spinning.';
 
@@ -241,9 +298,10 @@
       spinBtn.textContent = 'Spin';
       spinBtn.disabled = false;
       resetBtn.disabled = false;
+      setEditing(true);
 
       commitPick(index, rollover);
-      const v = verses[index];
+      const v = wheelVerses[index];
       setReadout(v, { label: `Module ${String(v.moduleId).padStart(2, '0')}`, mode: 'final' });
       live.textContent = `Landed on ${v.ref}.`;
       render({ flash: v.id });
@@ -269,7 +327,7 @@
       if (idx !== lastIdx) {
         lastIdx = idx;
         kick = 1;
-        const v = verses[idx];
+        const v = wheelVerses[idx];
         readoutRef.textContent = v.ref;
         readout.style.setProperty('--accent', v.color);
       }
@@ -359,7 +417,8 @@
       li.dataset.id = v.id;
       li.style.setProperty('--accent', v.color);
       li.title = `Module ${v.moduleId}: ${v.moduleName}`;
-      li.innerHTML = '<span class="chip-ref"></span><span class="chip-count"></span>';
+      li.innerHTML = '<span class="chip-ref"></span><span class="chip-count"></span>' +
+        '<button type="button" class="chip-remove"></button>';
       li.firstChild.textContent = v.ref;
       chipGrid.appendChild(li);
     });
@@ -370,7 +429,14 @@
       const n = state.counts[li.dataset.id] || 0;
       li.classList.toggle('is-hit', n > 0);
       li.querySelector('.chip-count').textContent = n;
-      li.setAttribute('aria-label', `${verses[byId.get(li.dataset.id)].ref}: selected ${n} ${n === 1 ? 'time' : 'times'}`);
+      const v = verses[byId.get(li.dataset.id)];
+      const off = state.excluded.has(v.id);
+      li.classList.toggle('is-off', off);
+      const rm = li.querySelector('.chip-remove');
+      rm.textContent = off ? '+' : '×';
+      rm.setAttribute('aria-label', `${off ? 'Add' : 'Remove'} ${v.ref} ${off ? 'to' : 'from'} the wheel`);
+      rm.title = off ? 'Add back to the wheel' : 'Remove from the wheel';
+      li.setAttribute('aria-label', `${v.ref}: selected ${n} ${n === 1 ? 'time' : 'times'}${off ? ', removed from wheel' : ''}`);
       li.classList.remove('is-new');
       if (flash === li.dataset.id) {
         void li.offsetWidth;
@@ -378,12 +444,12 @@
       }
     });
 
-    const seen = Object.keys(state.counts).length;
+    const seen = wheelVerses.filter((v) => state.counts[v.id]).length;
     $('[data-stat="spins"]').textContent = state.spins;
     $('[data-stat="seen"]').innerHTML = `${seen}<small> / ${N}</small>`;
     $('[data-stat="round"]').textContent = state.round;
 
-    const left = N - state.roundSeen.size;
+    const left = roundLeft();
     if (state.mode === 'random') {
       modeNote.textContent = 'Every spin is independent, so the same verse can come up again, even back to back.';
     } else if (left === 0) {
@@ -393,7 +459,73 @@
     }
 
     resetBtn.disabled = state.spinning || (state.spins === 0);
+    renderSections();
   }
+
+  /* ===== EDIT THE WHEEL ===== */
+  function renderSections() {
+    sectionList.querySelectorAll('.section-btn').forEach((btn) => {
+      const mv = verses.filter((v) => String(v.moduleId) === btn.dataset.mod);
+      const on = mv.filter((v) => !state.excluded.has(v.id)).length;
+      btn.setAttribute('aria-pressed', String(on > 0));
+      btn.classList.toggle('is-partial', on > 0 && on < mv.length);
+      btn.querySelector('.section-n').textContent = `${on}/${mv.length}`;
+    });
+    sectionNote.textContent = `${N} of ${TOTAL} verses on the wheel.`;
+    $('.restore-btn').disabled = state.spinning || state.excluded.size === 0;
+    const lock = state.spinning;
+    sectionList.querySelectorAll('button').forEach((b) => { b.disabled = lock; });
+    chipGrid.querySelectorAll('.chip-remove').forEach((b) => { b.disabled = lock; });
+  }
+
+  function setEditing() { renderSections(); }
+
+  /* Change which verses are on the wheel. `ids` are verse ids; `on` adds them. */
+  function setOnWheel(ids, on) {
+    if (state.spinning) return;
+    const next = new Set(state.excluded);
+    ids.forEach((id) => (on ? next.delete(id) : next.add(id)));
+    if (next.size >= TOTAL) {
+      live.textContent = 'The wheel needs at least one verse.';
+      sectionNote.textContent = 'The wheel needs at least one verse.';
+      return;
+    }
+    state.excluded = next;
+    saveExcluded();
+    applyWheelSet();
+    drawWheel();
+    render();
+    live.textContent = `${N} verses on the wheel.`;
+  }
+
+  function buildSections() {
+    sectionList.innerHTML = '';
+    modules.forEach((m) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'section-btn';
+      btn.dataset.mod = String(m.id);
+      btn.style.setProperty('--accent', m.color);
+      btn.innerHTML = '<span class="section-name"></span><span class="section-n"></span>';
+      btn.firstChild.textContent = `${String(m.id).padStart(2, '0')} · ${m.name}`;
+      sectionList.appendChild(btn);
+    });
+  }
+
+  sectionList.addEventListener('click', (e) => {
+    const btn = e.target.closest('.section-btn');
+    if (!btn) return;
+    const ids = verses.filter((v) => String(v.moduleId) === btn.dataset.mod).map((v) => v.id);
+    const anyOn = ids.some((id) => !state.excluded.has(id));
+    setOnWheel(ids, !anyOn);
+  });
+  chipGrid.addEventListener('click', (e) => {
+    const rm = e.target.closest('.chip-remove');
+    if (!rm) return;
+    const id = rm.closest('.chip').dataset.id;
+    setOnWheel([id], state.excluded.has(id));
+  });
+  $('.restore-btn').addEventListener('click', () => setOnWheel([...state.excluded], true));
 
   /* Reset takes two clicks so a stray tap can't wipe a session. */
   let armTimer = null;
@@ -460,12 +592,15 @@
   /* ===== INIT ===== */
   document.addEventListener('DOMContentLoaded', () => {
     loadSession();
+    loadExcluded();
+    applyWheelSet();
     try {
       const tr = localStorage.getItem(TRANSLATION_KEY);
       if (tr === 'NIV' || tr === 'ESV') state.translation = tr;
     } catch (e) { /* ignore */ }
 
     buildTracker();
+    buildSections();
     setTranslation(state.translation);
     setMode(state.mode);
     setSpinMs(state.spinMs);
