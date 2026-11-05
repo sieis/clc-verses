@@ -612,6 +612,9 @@
     document.querySelectorAll('.speed-toggle button')
       .forEach((btn) => btn.addEventListener('click', () => setSpinMs(Number(btn.dataset.ms))));
     spinBtn.addEventListener('click', spin);
+    /* Clicking the wheel does the same thing as the Spin button. The wheel is
+       aria-hidden, so keyboard and screen reader users keep using the button. */
+    $('.wheel-wrap').addEventListener('click', spin);
 
     drawWheel();
     new ResizeObserver(drawWheel).observe(canvas);
