@@ -440,11 +440,10 @@ button {
   color: var(--body);
 }
 .verse-body span { display: none; }
-body[data-reveal="none"] .verse-body { display: none; }
-body[data-translation="NIV"][data-reveal="hint"] .verse-body .niv.h,
-body[data-translation="NIV"][data-reveal="verse"] .verse-body .niv.f,
-body[data-translation="ESV"][data-reveal="hint"] .verse-body .esv.h,
-body[data-translation="ESV"][data-reveal="verse"] .verse-body .esv.f { display: block; }
+body[data-translation="NIV"] .verse-card:not(.is-full) .verse-body .niv.h,
+body[data-translation="NIV"] .verse-card.is-full .verse-body .niv.f,
+body[data-translation="ESV"] .verse-card:not(.is-full) .verse-body .esv.h,
+body[data-translation="ESV"] .verse-card.is-full .verse-body .esv.f { display: block; }
 
 .toolbar-toggles { display: flex; align-items: center; gap: var(--sp-xs); flex-wrap: wrap; }
 

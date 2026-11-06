@@ -184,14 +184,20 @@
   }
   let allSeq = null;
 
-  function revealButtons() {
-    return ['hint', 'verse'].map(mode => el('button', {
+  /* Inline cards: the first words are always showing; one button swaps in the
+     full verse and back. Each card keeps its own state. */
+  function verseToggleButton(card) {
+    const btn = el('button', {
       class: 'hint-btn',
       type: 'button',
-      dataset: { reveal: mode },
-      'aria-expanded': 'false',
-      onclick: () => setReveal(state.reveal === mode ? 'none' : mode)
-    }, `Show ${mode}`));
+      'aria-pressed': 'false'
+    }, 'Show verse');
+    btn.addEventListener('click', () => {
+      const full = card.classList.toggle('is-full');
+      btn.setAttribute('aria-pressed', String(full));
+      btn.textContent = full ? 'Show hint' : 'Show verse';
+    });
+    return btn;
   }
 
   function renderVerseCard(verse, opts = {}) {
@@ -211,9 +217,12 @@
       el('div', { class: 'verse-ref' }, refChildren)
     ]);
 
+    const attrs = { class: 'verse-card' };
+    if (opts.accent) attrs.style = { '--accent': opts.accent };
+    const card = el('div', attrs);
     const text = el('div', { class: 'verse-text-inner', inert: '' }, [
       el('div', { class: 'verse-text' }, [
-        el('div', { class: 'reveal-btns' }, revealButtons()),
+        el('div', { class: 'reveal-btns' }, [verseToggleButton(card)]),
         el('p', { class: 'verse-body' }, ['NIV', 'ESV'].flatMap(tr => [
           el('span', { class: `${tr.toLowerCase()} h` }, firstWords(verse.text[tr], HINT_WORDS)),
           el('span', { class: `${tr.toLowerCase()} f` }, verse.text[tr])
@@ -221,9 +230,7 @@
       ])
     ]);
 
-    const attrs = { class: 'verse-card' };
-    if (opts.accent) attrs.style = { '--accent': opts.accent };
-    const card = el('div', attrs, [head, text]);
+    card.append(head, text);
     head.addEventListener('click', () => {
       if (state.display === 'popup') openPopup(opts.seq, opts.index, head);
       else toggleVerse(card);
@@ -421,9 +428,7 @@
   }
 
   function syncReveal() {
-    document.body.dataset.reveal = state.reveal;
-    document.querySelectorAll('[data-reveal]').forEach(btn => {
-      if (!btn.classList.contains('hint-btn')) return;
+    dlg.querySelectorAll('.hint-btn[data-reveal]').forEach(btn => {
       const on = btn.dataset.reveal === state.reveal;
       btn.setAttribute('aria-expanded', String(on));
       btn.textContent = `${on ? 'Hide' : 'Show'} ${btn.dataset.reveal}`;
