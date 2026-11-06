@@ -14,6 +14,8 @@
 
   const state = {
     translation: 'NIV',
+    display: 'inline',   // 'inline' | 'popup'
+    reveal: 'hint',      // 'hint' | 'verse' | 'none' (shared by inline cards and the popup)
     view: 'modules',
     activeModule: null,
     isAnimating: false
@@ -142,36 +144,63 @@
             onclick: nextMod ? () => goToModule(nextMod.id) : null
           }, '→')
         ]),
-        el('div', { class: 'translation-toggle', role: 'group', 'aria-label': 'Bible translation' }, [
-          el('button', { type: 'button', dataset: { tr: 'NIV' } }, 'NIV'),
-          el('div', { class: 'divider' }),
-          el('button', { type: 'button', dataset: { tr: 'ESV' } }, 'ESV')
+        el('div', { class: 'toolbar-toggles' }, [
+          el('div', { class: 'translation-toggle', role: 'group', 'aria-label': 'Bible translation' }, [
+            el('button', { type: 'button', dataset: { tr: 'NIV' } }, 'NIV'),
+            el('button', { type: 'button', dataset: { tr: 'ESV' } }, 'ESV')
+          ]),
+          el('div', { class: 'display-toggle', role: 'group', 'aria-label': 'Verse display' }, [
+            el('button', { type: 'button', dataset: { display: 'inline' } }, 'Inline'),
+            el('button', { type: 'button', dataset: { display: 'popup' } }, 'Pop up')
+          ])
         ])
       ]),
       el('div', { class: 'panel-header' }, [
-        el('div', { class: 'panel-eyebrow', style: { color: mod.color } },
+        el('div', { class: 'panel-eyebrow' },
           `Module ${String(mod.id).padStart(2, '0')}`),
         el('h2', { class: 'panel-title' }, mod.name)
       ]),
       el('div', { class: 'verse-grid' },
-        mod.verses.map(v => renderVerseCard(v))
+        mod.verses.map((v, i) => renderVerseCard(v, { seq: panelSeq(mod), index: i, accent: mod.color }))
       )
     ]);
 
     container.appendChild(panel);
     bindTranslationButtons(panel);
+    bindDisplayButtons(panel);
     setTranslation(state.translation);
+    setDisplay(state.display);
     return panel;
   }
 
-  function renderVerseCard(verse, opts = {}) {
-    const attrs = {
-      class: 'verse-card',
-      type: 'button',
-      'aria-expanded': 'false'
-    };
-    if (opts.accent) attrs.style = { '--accent': opts.accent };
+  function firstWords(text, n) {
+    const words = text.trim().split(/\s+/);
+    return words.slice(0, n).join(' ') + (words.length > n ? '…' : '');
+  }
+  const HINT_WORDS = 5;
 
+  function panelSeq(mod) {
+    return mod.verses.map(v => ({ verse: v, mod }));
+  }
+  let allSeq = null;
+
+  /* Inline cards: the first words are always showing; one button swaps in the
+     full verse and back. Each card keeps its own state. */
+  function verseToggleButton(card) {
+    const btn = el('button', {
+      class: 'hint-btn',
+      type: 'button',
+      'aria-pressed': 'false'
+    }, 'Show verse');
+    btn.addEventListener('click', () => {
+      const full = card.classList.toggle('is-full');
+      btn.setAttribute('aria-pressed', String(full));
+      btn.textContent = full ? 'Show hint' : 'Show verse';
+    });
+    return btn;
+  }
+
+  function renderVerseCard(verse, opts = {}) {
     const refChildren = opts.moduleLabel
       ? [
           el('div', { class: 'verse-card-module' }, opts.moduleLabel),
@@ -179,17 +208,33 @@
         ]
       : verse.ref;
 
-    const card = el('button', attrs, [
+    const head = el('button', {
+      class: 'verse-head',
+      type: 'button',
+      'aria-expanded': 'false'
+    }, [
       el('div', { class: 'verse-top' }),
-      el('div', { class: 'verse-ref' }, refChildren),
-      el('div', { class: 'verse-text-inner' }, [
-        el('div', { class: 'verse-text' }, [
-          el('span', { class: 'niv' }, verse.text.NIV),
-          el('span', { class: 'esv' }, verse.text.ESV)
-        ])
+      el('div', { class: 'verse-ref' }, refChildren)
+    ]);
+
+    const attrs = { class: 'verse-card' };
+    if (opts.accent) attrs.style = { '--accent': opts.accent };
+    const card = el('div', attrs);
+    const text = el('div', { class: 'verse-text-inner', inert: '' }, [
+      el('div', { class: 'verse-text' }, [
+        el('div', { class: 'reveal-btns' }, [verseToggleButton(card)]),
+        el('p', { class: 'verse-body' }, ['NIV', 'ESV'].flatMap(tr => [
+          el('span', { class: `${tr.toLowerCase()} h` }, firstWords(verse.text[tr], HINT_WORDS)),
+          el('span', { class: `${tr.toLowerCase()} f` }, verse.text[tr])
+        ]))
       ])
     ]);
-    card.addEventListener('click', () => toggleVerse(card));
+
+    card.append(head, text);
+    head.addEventListener('click', () => {
+      if (state.display === 'popup') openPopup(opts.seq, opts.index, head);
+      else toggleVerse(card);
+    });
     return card;
   }
 
@@ -197,12 +242,16 @@
     const grid = document.querySelector('.all-verses-grid');
     if (!grid) return;
     grid.innerHTML = '';
+    allSeq = data.modules.flatMap(mod => panelSeq(mod));
+    let n = 0;
     data.modules.forEach((mod) => {
       const moduleLabel = `Module ${String(mod.id).padStart(2, '0')}`;
       mod.verses.forEach((v) => {
-        grid.appendChild(renderVerseCard(v, { accent: mod.color, moduleLabel }));
+        grid.appendChild(renderVerseCard(v, { accent: mod.color, moduleLabel, seq: allSeq, index: n++ }));
       });
     });
+    setDisplay(state.display);
+    syncReveal();
   }
 
   /* ===== MODULE OPEN / CLOSE =====
@@ -362,13 +411,136 @@
 
   function openVerseCard(card) {
     card.classList.add('is-open');
-    card.setAttribute('aria-expanded', 'true');
+    card.querySelector('.verse-head').setAttribute('aria-expanded', 'true');
+    card.querySelector('.verse-text-inner').inert = false;
   }
 
   function closeVerseCard(card) {
     card.classList.remove('is-open');
-    card.setAttribute('aria-expanded', 'false');
+    card.querySelector('.verse-head').setAttribute('aria-expanded', 'false');
+    card.querySelector('.verse-text-inner').inert = true;
   }
+
+  /* ===== REVEAL (hint / verse / hidden) ===== */
+  function setReveal(mode) {
+    state.reveal = mode;
+    syncReveal();
+  }
+
+  function syncReveal() {
+    dlg.querySelectorAll('.hint-btn[data-reveal]').forEach(btn => {
+      const on = btn.dataset.reveal === state.reveal;
+      btn.setAttribute('aria-expanded', String(on));
+      btn.textContent = `${on ? 'Hide' : 'Show'} ${btn.dataset.reveal}`;
+    });
+    fillPopupText();
+  }
+
+  /* ===== DISPLAY MODE (inline / popup) ===== */
+  function setDisplay(mode) {
+    state.display = mode;
+    document.body.dataset.display = mode;
+    try { localStorage.setItem('clc-display', mode); } catch (e) { /* ignore */ }
+    document.querySelectorAll('.display-toggle button').forEach(btn => {
+      const active = btn.dataset.display === mode;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+    document.querySelectorAll('.verse-card').forEach(card => {
+      if (mode === 'popup') closeVerseCard(card);
+      const head = card.querySelector('.verse-head');
+      if (mode === 'popup') {
+        head.removeAttribute('aria-expanded');
+        head.setAttribute('aria-haspopup', 'dialog');
+      } else {
+        head.removeAttribute('aria-haspopup');
+        head.setAttribute('aria-expanded', String(card.classList.contains('is-open')));
+      }
+    });
+  }
+
+  function bindDisplayButtons(root = document) {
+    root.querySelectorAll('.display-toggle button').forEach(btn => {
+      if (btn.dataset.bound === '1') return;
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', () => setDisplay(btn.dataset.display));
+    });
+  }
+
+  /* ===== POPUP ===== */
+  const dlg = document.querySelector('dialog.result');
+  const pop = { seq: null, i: 0, origin: null };
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function openPopup(seq, index, origin) {
+    if (dlg.open) return;
+    pop.seq = seq; pop.i = index; pop.origin = origin;
+    fillPopup();
+    dlg.showModal();
+    void dlg.offsetWidth;            // commit the start state so the transition runs
+    dlg.classList.add('is-in');
+  }
+
+  function fillPopup() {
+    const { verse, mod } = pop.seq[pop.i];
+    dlg.querySelector('.result-card').style.setProperty('--accent', mod.color);
+    dlg.querySelector('.result-eyebrow').textContent =
+      `Module ${String(mod.id).padStart(2, '0')} · ${mod.name}`;
+    dlg.querySelector('.result-ref').textContent = verse.ref;
+    dlg.querySelector('.pop-pos').textContent = `${pop.i + 1} of ${pop.seq.length}`;
+    dlg.querySelector('[data-step="-1"]').disabled = pop.i === 0;
+    dlg.querySelector('[data-step="1"]').disabled = pop.i === pop.seq.length - 1;
+    fillPopupText();
+  }
+
+  function fillPopupText() {
+    if (!pop.seq) return;
+    const hint = dlg.querySelector('.hint');
+    const open = state.reveal !== 'none';
+    if (open) {
+      const text = pop.seq[pop.i].verse.text[state.translation];
+      dlg.querySelector('.hint-label').textContent =
+        state.reveal === 'hint' ? 'First five words' : `Full verse · ${state.translation}`;
+      dlg.querySelector('.hint-text').textContent =
+        state.reveal === 'hint' ? firstWords(text, HINT_WORDS) : text;
+    }
+    hint.classList.toggle('is-open', open);
+    hint.classList.toggle('is-verse', state.reveal === 'verse');
+    hint.inert = !open;
+  }
+
+  function stepPopup(d) {
+    const next = pop.i + d;
+    if (!dlg.open || next < 0 || next >= pop.seq.length) return;
+    pop.i = next;
+    pop.origin = null;               // the original card is no longer the one to refocus
+    fillPopup();
+  }
+
+  function closePopup() {
+    if (!dlg.open) return;
+    dlg.classList.remove('is-in');
+    const origin = pop.origin;
+    const done = () => {
+      if (dlg.open) dlg.close();
+      if (origin && origin.isConnected) origin.focus({ preventScroll: true });
+    };
+    if (reduced.matches) done(); else setTimeout(done, 240);
+  }
+
+  dlg.addEventListener('click', (e) => {
+    if (e.target === dlg) closePopup();
+    const step = e.target.closest('[data-step]');
+    if (step) stepPopup(Number(step.dataset.step));
+    if (e.target.closest('[data-act="close"]')) closePopup();
+  });
+  dlg.addEventListener('cancel', (e) => { e.preventDefault(); closePopup(); });
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') stepPopup(-1);
+    else if (e.key === 'ArrowRight') stepPopup(1);
+  });
+  dlg.querySelectorAll('.hint-btn').forEach(btn => btn.addEventListener('click',
+    () => setReveal(state.reveal === btn.dataset.reveal ? 'none' : btn.dataset.reveal)));
 
   /* ===== TRANSLATION TOGGLE ===== */
   function setTranslation(tr) {
@@ -382,6 +554,7 @@
       btn.setAttribute('aria-pressed', String(active));
     });
 
+    fillPopupText();
     const attr = document.querySelector('[data-attribution]');
     if (attr) attr.textContent = data.attributions[tr];
   }
@@ -407,8 +580,15 @@
       const saved = localStorage.getItem('clc-translation');
       if (saved === 'NIV' || saved === 'ESV') state.translation = saved;
     } catch (e) { /* ignore */ }
+    try {
+      const d = localStorage.getItem('clc-display');
+      if (d === 'inline' || d === 'popup') state.display = d;
+    } catch (e) { /* ignore */ }
     renderGrid();
     initTranslationToggle();
+    bindDisplayButtons();
+    setDisplay(state.display);
+    syncReveal();
     initViewToggle();
   });
 })();

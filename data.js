@@ -7,7 +7,7 @@ window.versesData = {
     {
       id: 1,
       name: "A Man After God's Own Heart",
-      color: "#da291c",
+      color: "var(--sec-1)",
       verses: [
         { ref: "2 Chronicles 16:9a", text: {
           NIV: "For the eyes of the Lord range throughout the earth to strengthen those whose hearts are fully committed to him.",
@@ -26,7 +26,7 @@ window.versesData = {
     {
       id: 2,
       name: "Exchanged Life",
-      color: "#c4561f",
+      color: "var(--sec-2)",
       verses: [
         { ref: "Philippians 4:13", text: {
           NIV: "I can do all this through him who gives me strength.",
@@ -57,7 +57,7 @@ window.versesData = {
     {
       id: 3,
       name: "How to Study the Bible",
-      color: "#c8932f",
+      color: "var(--sec-3)",
       verses: [
         { ref: "Psalm 119:18", text: {
           NIV: "Open my eyes that I may see wonderful things in your law.",
@@ -76,7 +76,7 @@ window.versesData = {
     {
       id: 4,
       name: "Standing With a Friend",
-      color: "#a3a01f",
+      color: "var(--sec-4)",
       verses: [
         { ref: "Hebrews 10:24-25", text: {
           NIV: "And let us consider how we may spur one another on toward love and good deeds, not giving up meeting together, as some are in the habit of doing, but encouraging one another—and all the more as you see the Day approaching.",
@@ -103,7 +103,7 @@ window.versesData = {
     {
       id: 5,
       name: "Leading Your Family",
-      color: "#6f8f3a",
+      color: "var(--sec-5)",
       verses: [
         { ref: "Ephesians 5:21", text: {
           NIV: "Submit to one another out of reverence for Christ.",
@@ -138,7 +138,7 @@ window.versesData = {
     {
       id: 6,
       name: "Business by the Book",
-      color: "#2d7048",
+      color: "var(--sec-6)",
       verses: [
         { ref: "Proverbs 3:5-6", text: {
           NIV: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
@@ -161,7 +161,7 @@ window.versesData = {
     {
       id: 7,
       name: "Apologetics",
-      color: "#1f7a8c",
+      color: "var(--sec-7)",
       verses: [
         { ref: "Romans 1:16", text: {
           NIV: "For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes: first to the Jew, then to the Gentile.",
@@ -180,7 +180,7 @@ window.versesData = {
     {
       id: 8,
       name: "Money or the Master",
-      color: "#2855a8",
+      color: "var(--sec-8)",
       verses: [
         { ref: "Matthew 6:24", text: {
           NIV: "No one can serve two masters. Either you will hate the one and love the other, or you will be devoted to the one and despise the other. You cannot serve both God and money.",
@@ -199,7 +199,7 @@ window.versesData = {
     {
       id: 9,
       name: "How to Teach and Pray",
-      color: "#4a3fa8",
+      color: "var(--sec-9)",
       verses: [
         { ref: "1 Samuel 12:23", text: {
           NIV: "As for me, far be it from me that I should sin against the Lord by failing to pray for you. And I will teach you the way that is good and right.",
@@ -218,7 +218,7 @@ window.versesData = {
     {
       id: 10,
       name: "Discipleship",
-      color: "#7b3aa8",
+      color: "var(--sec-10)",
       verses: [
         { ref: "Romans 5:8", text: {
           NIV: "But God demonstrates his own love for us in this: While we were still sinners, Christ died for us.",
@@ -241,7 +241,7 @@ window.versesData = {
     {
       id: 11,
       name: "Leadership",
-      color: "#b03883",
+      color: "var(--sec-11)",
       verses: [
         { ref: "Nehemiah 1:4", text: {
           NIV: "When I heard these things, I sat down and wept. For some days I mourned and fasted and prayed before the God of heaven.",
@@ -268,7 +268,7 @@ window.versesData = {
     {
       id: 12,
       name: "Engaging Your Culture",
-      color: "#c1334e",
+      color: "var(--sec-12)",
       verses: [
         { ref: "Matthew 9:36-38", text: {
           NIV: "When he saw the crowds, he had compassion on them, because they were harassed and helpless, like sheep without a shepherd. Then he said to his disciples, “The harvest is plentiful but the workers are few. Ask the Lord of the harvest, therefore, to send out workers into his harvest field.”",
