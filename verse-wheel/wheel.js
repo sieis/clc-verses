@@ -115,7 +115,7 @@
   const readoutRef = $('.readout-ref');
   const spinBtn = $('.spin-btn');
   const modeNote = $('.mode-note');
-  const resetBtn = $('.reset-btn');
+  const resetBtn = $('.session-reset-btn');
   const chipGrid = $('.chip-grid');
   const sectionList = $('.section-list');
   const sectionNote = $('.section-note');
