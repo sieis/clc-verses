@@ -129,6 +129,16 @@
      Drawn once to a canvas; spinning is a CSS rotation of that canvas, so the
      animation never repaints. Slice i covers [i*SLICE, (i+1)*SLICE) degrees
      measured clockwise from 12 o'clock. */
+  /* Slice colors are CSS tokens (var(--sec-N)); read their live values so the
+     canvas follows the light/dark theme. */
+  function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  function resolveColor(c) {
+    const m = /^var\((--[\w-]+)\)$/.exec(c);
+    return m ? cssVar(m[1]) : c;
+  }
+
   function drawWheel() {
     const size = canvas.clientWidth;
     if (!size) return;
@@ -150,14 +160,14 @@
       ctx.moveTo(c, c);
       ctx.arc(c, c, R, a0, a1);
       ctx.closePath();
-      ctx.fillStyle = v.color;
+      ctx.fillStyle = resolveColor(v.color);
       ctx.fill();
       if (i % 2) {            // alternate shading so neighbours in one module stay distinct
-        ctx.fillStyle = 'rgba(0,0,0,0.14)';
+        ctx.fillStyle = cssVar('--wheel-shade') || 'rgba(0,0,0,0.10)';
         ctx.fill();
       }
       ctx.lineWidth = 1.5;
-      ctx.strokeStyle = '#181818';
+      ctx.strokeStyle = cssVar('--wheel-gap') || '#ffffff';
       ctx.stroke();
     });
 
@@ -618,6 +628,7 @@
 
     drawWheel();
     new ResizeObserver(drawWheel).observe(canvas);
+    window.addEventListener('themechange', drawWheel);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawWheel);
 
     /* A result stays up until dismissed, even across a refresh or a trip Home. */

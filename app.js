@@ -149,7 +149,7 @@
         ])
       ]),
       el('div', { class: 'panel-header' }, [
-        el('div', { class: 'panel-eyebrow', style: { color: mod.color } },
+        el('div', { class: 'panel-eyebrow' },
           `Module ${String(mod.id).padStart(2, '0')}`),
         el('h2', { class: 'panel-title' }, mod.name)
       ]),
